@@ -1,12 +1,6 @@
-# Unearthed: The Mushroom Hunter
-
-A local Mycologist is looking to buy rare mushrooms, but only in pairs. Compete against your friends in collecting the rarest mushrooms so as to earn the largest total for the mushrooms you sell to the Mycologist. You collect them by tapping on the trees to reveal two each turn. If they are a match, you collect the $$$. If they don't match, they hide back in their tree. Watch out for the poison mushrooms! You don't know they are poison until you try to collect.
-
-<img width="500" alt="Screenshot of Unearthed" src="https://github.com/user-attachments/assets/f02e8edd-86fc-4135-a51f-97ec2893c418">
-
 # Snork!
 
-<img width="500" alt="Screenshot of Unearthed" src="https://github.com/user-attachments/assets/f02e8edd-86fc-4135-a51f-97ec2893c418">
+<img width="500" alt="Screenshot of Unearthed" src="">
 
 Snork! is a competitive multiplayer "solitaire-like" game for two or more players, using a deck of cards for each player. The players race to get rid of the cards from their "Snork piles" while scoring points by building from the ace up onto common foundations. The first player to deplete their Snork pile gets to end the game. At this point, the scoring in the foundations are tallied for all players, and their remaining Snork pile is subtracted from their score. The player with the highest score wins.
 
