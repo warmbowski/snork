@@ -1,6 +1,6 @@
 # Snork!
 
-<img width="500" alt="Screenshot of Unearthed" src="">
+<img width="500" alt="Screenshot of Snork!" src="https://github.com/user-attachments/assets/eda39b90-ce88-467e-a46b-62e3036f5cf2" />
 
 Snork! is a competitive multiplayer "solitaire-like" game for two or more players, using a deck of cards for each player. The players race to get rid of the cards from their "Snork piles" while scoring points by building from the ace up onto common foundations. The first player to deplete their Snork pile gets to end the game. At this point, the scoring in the foundations are tallied for all players, and their remaining Snork pile is subtracted from their score. The player with the highest score wins.
 
