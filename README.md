@@ -1,50 +1,69 @@
-# React + TypeScript + Vite
+# Unearthed: The Mushroom Hunter
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A local Mycologist is looking to buy rare mushrooms, but only in pairs. Compete against your friends in collecting the rarest mushrooms so as to earn the largest total for the mushrooms you sell to the Mycologist. You collect them by tapping on the trees to reveal two each turn. If they are a match, you collect the $$$. If they don't match, they hide back in their tree. Watch out for the poison mushrooms! You don't know they are poison until you try to collect.
 
-Currently, two official plugins are available:
+<img width="500" alt="Screenshot of Unearthed" src="https://github.com/user-attachments/assets/f02e8edd-86fc-4135-a51f-97ec2893c418">
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Snork!
 
-## Expanding the ESLint configuration
+<img width="500" alt="Screenshot of Unearthed" src="https://github.com/user-attachments/assets/f02e8edd-86fc-4135-a51f-97ec2893c418">
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Snork! is a competitive multiplayer "solitaire-like" game for two or more players, using a deck of cards for each player. The players race to get rid of the cards from their "Snork piles" while scoring points by building from the ace up onto common foundations. The first player to deplete their Snork pile gets to end the game. At this point, the scoring in the foundations are tallied for all players, and their remaining Snork pile is subtracted from their score. The player with the highest score wins.
 
-- Configure the top-level `parserOptions` property like this:
+#### Basic gameplay to implement:
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- [x] Scaffold in basic multiplayer game layout for Rune
+- [x] Set game state, logic, and actions via Rune SDK
+- [x] Implement drag and drop components and logic
+  - [x] flip stock piles cards to waste in groups of 3
+  - [x] move top card from Snork pile to foundation or a working stack and flip next card
+  - [x] move top card from waste pile to foundation or a working stack
+  - [x] play top card from a working stacks to another working stack or foundation
+  - [x] move multi-card stack from a working stack to another working stack
+- [ ] Implement stalemate button to vote for stalemate (show after 2x through stock with no play)
+- [ ] Implement end game button for players who deplete their Snork pile (they may keep playing cards until this end game button is pressed)
+- [x] Implement scoring keeping logic
+- [ ] Implement end game screen with scoring and pleasant animations
+- [ ] Implement game start
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+#### Expanded gameplay ideas to implement:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+- [ ] Support multiplayer > 2
+- [ ]
+- [ ] Persist game stats for each player: PRs, Totals, etc
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+#### Expanded UX ideas:
+
+- [ ] Add ability to unlock new themes
+
+#### Codebase improvements
+
+- [ ] move to monorepo and break components and logic into local packages to be used on other playforms.
+
+## Getting Started with Rune
+
+### `pnpm run dev`
+
+Runs the game in Dev UI.
+
+The page will reload when you make changes.
+
+### `pnpm run upload`
+
+Builds the game and starts upload process to Rune.
+
+### `pnpm run build`
+
+Builds the game. You can then upload it to Rune using `pnpm dlx rune-games-cli@latest upload`.
+
+### `pnpm run lint`
+
+Runs the validation rules. You can read about them in the [docs on server-side logic](https://developers.rune.ai/docs/advanced/server-side-logic).
+
+### `pnpm run typecheck`
+
+Verifies that TypeScript is valid.
+
+## Learn More
+
+See the [Rune docs](https://developers.rune.ai/docs/quick-start) for more info. You can also ask any questions in the [Rune Discord](https://discord.gg/rune-devs), we're happy to help!
