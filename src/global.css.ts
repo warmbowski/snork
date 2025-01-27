@@ -1,4 +1,7 @@
-import { globalStyle /* globalFontFace */ } from "@vanilla-extract/css"
+import {
+  globalKeyframes,
+  globalStyle /* globalFontFace */,
+} from "@vanilla-extract/css"
 import { vars } from "./theme.css"
 
 // globalFontFace("fibberish", {
@@ -131,6 +134,20 @@ globalStyle(".work-row", {
   columnGap: "1rem",
 })
 
+globalStyle(".work-row .snork-declare", {
+  textAlign: "center",
+  fontWeight: "bold",
+  fontSize: "1.4rem",
+  animation: "2s infinite shake",
+  borderRadius: "6px",
+  border: "1px solid white",
+  backgroundColor: vars.colors.foundations.background,
+})
+globalStyle(".work-row .snork-declare:hover", {
+  cursor: "pointer",
+  scale: 1.1,
+})
+
 globalStyle(".work-row .snork-top:hover", {
   cursor: "pointer",
   transform: "none",
@@ -226,4 +243,14 @@ globalStyle(".common-row .badge", {
   height: "1.8em",
   borderRadius: "50%",
   filter: "saturate(1.3)",
+})
+
+// animations
+globalKeyframes("shake", {
+  "0%": { transform: "rotate(0deg)" },
+  "85%": { transform: "rotate(0deg)" },
+  "85.1%": { transform: "rotate(10deg)" },
+  "90%": { transform: "rotate(-10deg)" },
+  "95%": { transform: "rotate(10deg)" },
+  "100%": { transform: "rotate(0deg)" },
 })

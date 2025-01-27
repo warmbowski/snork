@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react"
 import { useAtom } from "jotai"
 import { gameStateAtom, yourPlayerIdAtom } from "../game-state"
 import { usePreloadAssets } from "./preload-theme"
-import { getPlayerIndex } from "../logic/utils"
+import { getFoundationsScoreMap, getPlayerIndex } from "../logic/utils"
 import { Foundations } from "./foundations"
 import { StockRow } from "./stock-row"
 import { WorkRow } from "./work-row"
@@ -26,33 +26,31 @@ export function App() {
 
   usePreloadAssets()
 
-  // useEffect(() => {
-  //   // game state related rune actions called only from current player's game
-  //   if (
-  //     game &&
-  //     game.currentTurn &&
-  //     game.currentTurn.playerId === yourPlayerId
-  //   ) {
-
-  //     if (totalMatches === game.matrix.length / 2) {
-  //       Rune.actions.endGame()
-  //     }
-  //   }
-  // }, [game, yourPlayerId])
-
   useEffect(() => {
     Rune.initClient({
-      onChange: ({ game, /* action, */ yourPlayerId }) => {
+      onChange: ({ game, action, yourPlayerId }) => {
         setGame(game)
         setYourPlayerId(yourPlayerId || "")
         // console.log(action)
-        const scoreMap = game.foundations
-          .flatMap((f) => f)
-          .reduce<Record<string, number>>((acc, c) => {
-            acc[c.playerId] = (acc[c.playerId] || 0) + 1
-            return acc
-          }, {})
+        const scoreMap = getFoundationsScoreMap(game)
         setTotals(scoreMap)
+
+        // add action sounds effects here
+        if (action && action.name === "moveCard") {
+          // playSound("moveCard")
+        }
+        if (action && action.name === "turnStock") {
+          // playSound("turnStock")
+        }
+        if (action && action.name === "declareSnork") {
+          // playSound("declareSnork")
+        }
+        if (action && action.name === "voteEndGame") {
+          // playSound("markStockStale")
+        }
+        if (action && action.name === "voteEndGame") {
+          // playSound("endGame")
+        }
       },
     })
   }, [setGame, setYourPlayerId])
@@ -86,7 +84,11 @@ export function App() {
           .map((t) => {
             return (
               <div className="tableau" key={`tableau-${t.playerId}`}>
-                <WorkRow snorkPile={t.snorkPile} workStacks={t.workStacks} />
+                <WorkRow
+                  snorkPile={t.snorkPile}
+                  workStacks={t.workStacks}
+                  isGameOver={!!game.gameOverResults}
+                />
                 <StockRow
                   stockPile={t.stockPile}
                   wastePile={t.wastePile}

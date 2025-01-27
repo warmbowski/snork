@@ -1,5 +1,14 @@
 import { PlayerId } from "rune-sdk"
-import { Card, Deck, GameState, MoveData, Tableau, Rank, Suit } from "./types"
+import {
+  Card,
+  Deck,
+  GameState,
+  MoveData,
+  Tableau,
+  Rank,
+  Suit,
+  GameResult,
+} from "./types"
 
 export function createDeck(playerId: PlayerId): Deck {
   const cards: Card[] = []
@@ -42,6 +51,9 @@ export function createTableau(deck: Deck): Tableau {
     workStacks: shuffledCards.slice(13, 17).map((card) => [card]),
     stockPile: shuffledCards.slice(17),
     wastePile: [],
+    stockIsStale: false,
+    noMorePlays: false,
+    readyToStart: false,
   }
 }
 
@@ -69,6 +81,44 @@ export function getSrcPile(
     case "stockPile":
       return [...state.tableaus[playerIndex].stockPile]
   }
+}
+
+export function getFoundationsScoreMap(state: GameState) {
+  const scoreMap = state.foundations
+    .flatMap((f) => f)
+    .reduce<Record<string, number>>((acc, c) => {
+      acc[c.playerId] = (acc[c.playerId] || 0) + 1
+      return acc
+    }, {})
+  return scoreMap
+}
+
+export function computeGameOverResults(state: GameState) {
+  const playerFoundationsScores = getFoundationsScoreMap(state)
+  const sortedPlayerScores = Object.entries(playerFoundationsScores)
+    .map(([id, fScore]) => {
+      return {
+        playerId: id,
+        totalScore:
+          fScore -
+          state.tableaus[getPlayerIndex(state, id)].snorkPile.length * 2,
+      }
+    })
+    .sort((a, b) => b.totalScore - a.totalScore)
+
+  const maxScore = sortedPlayerScores[0].totalScore
+  const gameIsTied =
+    sortedPlayerScores.filter((player) => player.totalScore === maxScore)
+      .length > 1
+  state.gameOverResults = sortedPlayerScores.reduce<
+    Record<PlayerId, GameResult>
+  >((acc, playerStats) => {
+    const winResult: GameResult = gameIsTied ? "TIE" : "WON"
+    const loseResult: GameResult = "LOST"
+    acc[playerStats.playerId] =
+      playerStats.totalScore === maxScore ? winResult : loseResult
+    return acc
+  }, {})
 }
 
 export function getMovingCards(

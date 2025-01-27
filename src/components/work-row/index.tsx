@@ -10,9 +10,10 @@ import {
 interface WorkRowProps {
   snorkPile: Tableau["snorkPile"]
   workStacks: Tableau["workStacks"]
+  isGameOver?: boolean
 }
 
-export function WorkRow({ workStacks, snorkPile }: WorkRowProps) {
+export function WorkRow({ workStacks, snorkPile, isGameOver }: WorkRowProps) {
   const upSnorkCard = snorkPile.length ? snorkPile[0] : null
 
   return (
@@ -42,7 +43,17 @@ export function WorkRow({ workStacks, snorkPile }: WorkRowProps) {
           }}
         />
       ) : (
-        <CardPlaceholder />
+        <div>
+          <CardPlaceholder />
+          <div
+            className={!isGameOver ? "snork-declare" : ""}
+            onClick={() => {
+              Rune.actions.declareSnork()
+            }}
+          >
+            Snork!
+          </div>
+        </div>
       )}
       <div className="work-stacks">
         {workStacks.map((workStack, slot) => {
