@@ -17,8 +17,8 @@ export const TABLEAU_THEME: Theme = {
   images: {
     cardPlaceholder: "card-themes/default/cards/card-placeholder.png",
     cardBacks: [
-      "card-themes/default/card-backs/card-back0.png",
-      "card-themes/default/card-backs/card-back1.png",
+      "card-themes/default/cards/card-back0.png",
+      "card-themes/default/cards/card-back1.png",
     ],
     cards: [
       "card-themes/default/cards/suit0/rank0.png",
