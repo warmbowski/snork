@@ -129,6 +129,28 @@ globalStyle(".tableau", {
   gap: "1rem",
 })
 
+globalStyle(".ready-button", {
+  textAlign: "center",
+  fontWeight: "bold",
+  fontSize: "2rem",
+  borderRadius: "6px",
+  border: "1px solid white",
+  backgroundColor: vars.colors.foundations.background,
+  padding: "1rem",
+  marginTop: "2rem",
+})
+globalStyle(".ready-button:hover", {
+  cursor: "pointer",
+  scale: 1.1,
+})
+globalStyle(".ready-button.voted", {
+  backgroundColor: "transparent",
+  scale: 1,
+})
+globalStyle(".ready-button.voted:hover", {
+  cursor: "not-allowed",
+})
+
 globalStyle(".work-row", {
   display: "flex",
   alignItems: "flex-start",

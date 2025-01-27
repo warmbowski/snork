@@ -30,6 +30,11 @@ export function App() {
   useEffect(() => {
     // game state related rune actions called only from current player's game
     if (game) {
+      // check if all players are ready to start and start the game
+      if (game.tableaus.every((t) => t.readyToStart)) {
+        Rune.actions.startGame()
+      }
+
       // check if everyeone is stuck and reset stock piles
       if (game.tableaus.every((t) => t.isStuck)) {
         // this is to endure the reset is only triggered from one player
@@ -101,22 +106,33 @@ export function App() {
         </div>
         <Foundations />
       </div>
-      <div className="tableaus">
-        {game.tableaus
-          .filter((t) => t.playerId === (yourPlayerId || spectateId))
-          .map((t) => {
-            return (
-              <div className="tableau" key={`tableau-${t.playerId}`}>
-                <WorkRow
-                  snorkPile={t.snorkPile}
-                  workStacks={t.workStacks}
-                  isGameOver={!!game.gameOverResults}
-                />
-                <StockRow tableau={t} playerIndex={playerIndex} />
-              </div>
-            )
-          })}
-      </div>
+      {game.gameStarted ? (
+        <div className="tableaus">
+          {game.tableaus
+            .filter((t) => t.playerId === (yourPlayerId || spectateId))
+            .map((t) => {
+              return (
+                <div className="tableau" key={`tableau-${t.playerId}`}>
+                  <WorkRow
+                    snorkPile={t.snorkPile}
+                    workStacks={t.workStacks}
+                    isGameOver={!!game.gameOverResults}
+                  />
+                  <StockRow tableau={t} playerIndex={playerIndex} />
+                </div>
+              )
+            })}
+        </div>
+      ) : (
+        <div
+          className={`ready-button ${game.tableaus[playerIndex].readyToStart ? "voted" : ""}`}
+          onClick={() => {
+            Rune.actions.voteStartGame()
+          }}
+        >
+          Ready to start
+        </div>
+      )}
       {!yourPlayerId && (
         <div className="playerSelect">
           {game.playerIds.map((playerId, idx) => (

@@ -18,8 +18,8 @@ Snork! is a competitive multiplayer "solitaire-like" game for two or more player
 - [x] Implement "stuck" button to vote for resetting the stock pile (show after 3x through stock pile with no play)
 - [x] Implement end game button for players who deplete their Snork pile (they may keep playing cards until this end game button is pressed)
 - [x] Implement score keeping logic
+- [x] Implement ready button and game start logic
 - [ ] Implement end game screen with scoring and pleasant animations
-- [ ] Implement ready button and game start logic
 - [ ] Add sound effects and animations
   - [ ] Add animations and sound effect for card placements in foundations
   - [ ] Add sound effect for general card placement
