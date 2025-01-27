@@ -51,6 +51,10 @@ globalStyle(".app", {
   height: "100%",
 })
 
+globalStyle(".base-color", {
+  color: vars.colors.foundations.text,
+  backgroundColor: vars.colors.foundations.background,
+})
 globalStyle(".player0", {
   backgroundColor: vars.colors.player1.background,
   color: vars.colors.player1.text,
@@ -132,6 +136,20 @@ globalStyle(".work-row", {
   marginTop: "1rem",
   marginBottom: "1rem",
   columnGap: "1rem",
+})
+
+globalStyle(".work-row .badge", {
+  position: "relative",
+  top: "-1.5em",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  width: "1.8em",
+  height: "1.8em",
+  borderRadius: "50%",
+  border: "1px solid white",
+  filter: "saturate(1.3)",
+  margin: "auto",
 })
 
 globalStyle(".work-row .snork-declare", {

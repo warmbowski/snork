@@ -19,29 +19,32 @@ export function WorkRow({ workStacks, snorkPile, isGameOver }: WorkRowProps) {
   return (
     <div className="work-row">
       {upSnorkCard ? (
-        <img
-          id={`card-${upSnorkCard.id}`}
-          key={`card-${upSnorkCard.id}`}
-          className={clsx(
-            "card",
-            "draggable",
-            "snork-top",
-            snorkPile.length > 1 && "pile"
-          )}
-          src={`/card-themes/default/cards/suit${upSnorkCard.suit}/rank${upSnorkCard.rank - 1}.png`}
-          draggable
-          onDragStart={(e) => {
-            handleCardDragStart(e, {
-              src: {
-                pile: "snorkPile",
-                cardId: upSnorkCard.id,
-              },
-            })
-          }}
-          onDragEnd={(e) => {
-            handleCardDragEnd(e)
-          }}
-        />
+        <div>
+          <img
+            id={`card-${upSnorkCard.id}`}
+            key={`card-${upSnorkCard.id}`}
+            className={clsx(
+              "card",
+              "draggable",
+              "snork-top",
+              snorkPile.length > 1 && "pile"
+            )}
+            src={`/card-themes/default/cards/suit${upSnorkCard.suit}/rank${upSnorkCard.rank - 1}.png`}
+            draggable
+            onDragStart={(e) => {
+              handleCardDragStart(e, {
+                src: {
+                  pile: "snorkPile",
+                  cardId: upSnorkCard.id,
+                },
+              })
+            }}
+            onDragEnd={(e) => {
+              handleCardDragEnd(e)
+            }}
+          />
+          <div className="badge base-color">{snorkPile.length}</div>
+        </div>
       ) : (
         <div>
           <CardPlaceholder />
@@ -70,6 +73,7 @@ export function WorkRow({ workStacks, snorkPile, isGameOver }: WorkRowProps) {
                         src={`/card-themes/default/cards/suit${card.suit}/rank${card.rank - 1}.png`}
                         draggable
                         onDragStart={(e) => {
+                          // // TODO: create a better custom drage image for movng stacked cards
                           // const stackEl =
                           //   e.currentTarget.parentElement?.cloneNode(
                           //     true
