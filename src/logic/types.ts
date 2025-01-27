@@ -27,7 +27,7 @@ export interface Tableau {
   stockPile: Card[] // starts with 35 cards
   wastePile: [number, number][] // array of [stockIndex, stockIndex] (3 cards at a time)
   stockIsStale: boolean // true if stock pile has been turned over at least twice without playing (reset to false when a card is played)
-  noMorePlays: boolean // true if stockIsStale is true and player votes to end game
+  isStuck: boolean // true if stockIsStale is true and player votes to end game
   readyToStart: boolean // true if is ready to start (game will start wehn all players are ready)
 }
 

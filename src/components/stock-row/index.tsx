@@ -1,37 +1,66 @@
+import { useEffect } from "react"
 import { Tableau } from "../../logic/types"
 import {
   handleCardDragEnd,
   handleCardDragStart,
 } from "../card-dropzone/handlers"
 import { CardPlaceholder } from "../placeholder"
+import { STALE_COUNT_TRESHOLD } from "../../constants"
+import { useAtom } from "jotai"
+import { staleCountAtom } from "../../game-state"
 
 interface StockRowProps {
-  stockPile: Tableau["stockPile"]
-  wastePile: Tableau["wastePile"]
+  tableau: Tableau
   playerIndex: number
 }
 
-export function StockRow({ stockPile, wastePile, playerIndex }: StockRowProps) {
-  const lastWasteCardIndex = wastePile[wastePile.length - 1]?.[1] ?? -1
-  const lastStockCardIndex = stockPile.length - 1
+export function StockRow({ tableau, playerIndex }: StockRowProps) {
+  const [staleCount, setStaleCount] = useAtom(staleCountAtom)
+  const lastWasteCardIndex =
+    tableau.wastePile[tableau.wastePile.length - 1]?.[1] ?? -1
+  const lastStockCardIndex = tableau.stockPile.length - 1
+
+  useEffect(() => {
+    if (tableau.wastePile.length === 0) {
+      setStaleCount((prev) => prev + 1)
+    }
+  }, [setStaleCount, tableau.wastePile.length])
+
+  useEffect(() => {
+    if (staleCount > STALE_COUNT_TRESHOLD) {
+      Rune.actions.markStockStale()
+    } else {
+      Rune.actions.markStockNotStale()
+    }
+  }, [staleCount])
 
   return (
     <div className="stock-row">
-      {lastWasteCardIndex !== lastStockCardIndex ? (
-        <img
-          className="card stock pile"
-          src={`/card-themes/default/cards/card-back${playerIndex}.png`}
-          onClick={() => Rune.actions.turnStock()}
-        />
-      ) : (
-        <CardPlaceholder onClick={() => Rune.actions.turnStock()} />
-      )}
+      <div>
+        {lastWasteCardIndex !== lastStockCardIndex ? (
+          <img
+            className="card stock pile"
+            src={`/card-themes/default/cards/card-back${playerIndex}.png`}
+            onClick={() => Rune.actions.turnStock()}
+          />
+        ) : (
+          <CardPlaceholder onClick={() => Rune.actions.turnStock()} />
+        )}
+        {tableau.stockIsStale && (
+          <div
+            className={`stuck-button ${tableau.isStuck ? "voted" : ""}`}
+            onClick={() => Rune.actions.voteStuck()}
+          >
+            Stuck
+          </div>
+        )}
+      </div>
       <div className="waste">
-        {wastePile.length > 0 &&
-          stockPile
+        {tableau.wastePile.length > 0 &&
+          tableau.stockPile
             .slice(
-              wastePile[wastePile.length - 1][0],
-              wastePile[wastePile.length - 1][1] + 1
+              tableau.wastePile[tableau.wastePile.length - 1][0],
+              tableau.wastePile[tableau.wastePile.length - 1][1] + 1
             )
             .map((card, idx, arr) => {
               return (
@@ -50,6 +79,7 @@ export function StockRow({ stockPile, wastePile, playerIndex }: StockRowProps) {
                   }}
                   onDragEnd={(e) => {
                     handleCardDragEnd(e)
+                    setStaleCount(0)
                   }}
                 />
               )

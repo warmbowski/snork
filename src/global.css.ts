@@ -152,7 +152,7 @@ globalStyle(".work-row .badge", {
   margin: "auto",
 })
 
-globalStyle(".work-row .snork-declare", {
+globalStyle(".work-row .snork-button", {
   textAlign: "center",
   fontWeight: "bold",
   fontSize: "1.4rem",
@@ -161,7 +161,7 @@ globalStyle(".work-row .snork-declare", {
   border: "1px solid white",
   backgroundColor: vars.colors.foundations.background,
 })
-globalStyle(".work-row .snork-declare:hover", {
+globalStyle(".work-row .snork-button:hover", {
   cursor: "pointer",
   scale: 1.1,
 })
@@ -200,6 +200,26 @@ globalStyle(".stock-row", {
   marginTop: "1rem",
   marginBottom: "1rem",
   columnGap: "1rem",
+})
+
+globalStyle(".stock-row .stuck-button", {
+  textAlign: "center",
+  fontWeight: "bold",
+  fontSize: "1.4rem",
+  borderRadius: "6px",
+  border: "1px solid white",
+  backgroundColor: vars.colors.foundations.background,
+})
+globalStyle(".stock-row .stuck-button:hover", {
+  cursor: "pointer",
+  scale: 1.1,
+})
+globalStyle(".stock-row .stuck-button.voted", {
+  backgroundColor: "transparent",
+})
+globalStyle(".stock-row .stuck-button.voted:hover", {
+  cursor: "not-allowed",
+  scale: 1,
 })
 
 globalStyle(".stock-row .stock:hover", {

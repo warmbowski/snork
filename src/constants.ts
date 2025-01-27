@@ -1,5 +1,6 @@
 export const MATCH_SCORE_ANIMATION_DURATION = 1
 export const REVERT_REVEALED_TILES_DELAY = 3
+export const STALE_COUNT_TRESHOLD = 3
 
 interface Theme {
   images: {

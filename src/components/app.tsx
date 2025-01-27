@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react"
 import { useAtom } from "jotai"
-import { gameStateAtom, yourPlayerIdAtom } from "../game-state"
+import { gameStateAtom, staleCountAtom, yourPlayerIdAtom } from "../game-state"
 import { usePreloadAssets } from "./preload-theme"
 import { getFoundationsScoreMap, getPlayerIndex } from "../logic/utils"
 import { Foundations } from "./foundations"
@@ -12,6 +12,7 @@ type ScoreMap = Record<string, number>
 export function App() {
   const [game, setGame] = useAtom(gameStateAtom)
   const [yourPlayerId, setYourPlayerId] = useAtom(yourPlayerIdAtom)
+  const [, setStaleCount] = useAtom(staleCountAtom)
   const [spectateIndex, setSpectateIndex] = useState(0)
   const [totals, setTotals] = useState<ScoreMap>({})
   const rootRef = useRef<HTMLDivElement>(null)
@@ -25,6 +26,24 @@ export function App() {
   }, [game, spectateId, yourPlayerId])
 
   usePreloadAssets()
+
+  useEffect(() => {
+    // game state related rune actions called only from current player's game
+    if (game) {
+      // check if everyeone is stuck and reset stock piles
+      if (game.tableaus.every((t) => t.isStuck)) {
+        // this is to endure the reset is only triggered from one player
+        if (game.tableaus[0].playerId === yourPlayerId) {
+          Rune.actions.resetStockPiles()
+        }
+      }
+
+      // check if game is over
+      if (game.snorkDeclared === yourPlayerId) {
+        Rune.actions.endGame()
+      }
+    }
+  }, [game, yourPlayerId])
 
   useEffect(() => {
     Rune.initClient({
@@ -42,18 +61,22 @@ export function App() {
         if (action && action.name === "turnStock") {
           // playSound("turnStock")
         }
+        if (action && action.name === "voteStuck") {
+          // playSound("voteStuck")
+        }
+        if (action && action.name === "resetStockPiles") {
+          // playSound("resetStockPiles")
+          setStaleCount(0)
+        }
+        if (action && action.name === "endGame") {
+          // playSound("endGame")
+        }
         if (action && action.name === "declareSnork") {
           // playSound("declareSnork")
         }
-        if (action && action.name === "voteEndGame") {
-          // playSound("markStockStale")
-        }
-        if (action && action.name === "voteEndGame") {
-          // playSound("endGame")
-        }
       },
     })
-  }, [setGame, setYourPlayerId])
+  }, [setGame, setStaleCount, setYourPlayerId])
 
   if (!game) {
     // Rune only shows your game after an onChange() so no need for loading screen
@@ -89,11 +112,7 @@ export function App() {
                   workStacks={t.workStacks}
                   isGameOver={!!game.gameOverResults}
                 />
-                <StockRow
-                  stockPile={t.stockPile}
-                  wastePile={t.wastePile}
-                  playerIndex={playerIndex}
-                />
+                <StockRow tableau={t} playerIndex={playerIndex} />
               </div>
             )
           })}

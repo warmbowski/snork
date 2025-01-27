@@ -19,7 +19,8 @@ type GameActions = {
   markStockStale: () => void
   markStockNotStale: () => void
   declareSnork: () => void
-  voteEndGame: () => void
+  voteStuck: () => void
+  resetStockPiles: () => void
   endGame: () => void
 }
 
@@ -60,15 +61,11 @@ Rune.initLogic({
     },
     declareSnork: (_, { game, playerId }) => {
       game.snorkDeclared = playerId
-      Rune.actions.endGame()
     },
-    voteEndGame: (_, { game, playerId }) => {
+    voteStuck: (_, { game, playerId }) => {
       const { stockIsStale } = game.tableaus[getPlayerIndex(game, playerId)]
       if (stockIsStale) {
-        game.tableaus[getPlayerIndex(game, playerId)].noMorePlays = true
-      }
-      if (game.tableaus.every((t) => t.noMorePlays)) {
-        Rune.actions.endGame()
+        game.tableaus[getPlayerIndex(game, playerId)].isStuck = true
       }
     },
     endGame: (_, { game }) => {
@@ -82,6 +79,15 @@ Rune.initLogic({
           minimizePopUp: true,
         })
       }
+    },
+    resetStockPiles: (_, { game }) => {
+      game.tableaus.forEach((tableau) => {
+        const bottomCard = tableau.stockPile[0]
+        tableau.stockPile = [...tableau.stockPile.slice(1), bottomCard]
+        tableau.wastePile = []
+        tableau.isStuck = false
+        tableau.stockIsStale = false
+      })
     },
     turnStock: (_, { game, playerId }) => {
       const playerIndex = getPlayerIndex(game, playerId)
@@ -123,6 +129,11 @@ Rune.initLogic({
             addCardsToDestPile(game, playerId, moveData.dest, cards)
             removeCardsFromSrcPile(game, playerId, moveData.src)
           }
+
+          // if anyone plays in the foundation, reset the isStuck votes to give up
+          game.tableaus.map((t) => {
+            t.isStuck = false
+          })
           break
         }
 

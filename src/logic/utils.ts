@@ -52,7 +52,7 @@ export function createTableau(deck: Deck): Tableau {
     stockPile: shuffledCards.slice(17),
     wastePile: [],
     stockIsStale: false,
-    noMorePlays: false,
+    isStuck: false,
     readyToStart: false,
   }
 }

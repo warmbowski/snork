@@ -49,7 +49,7 @@ export function WorkRow({ workStacks, snorkPile, isGameOver }: WorkRowProps) {
         <div>
           <CardPlaceholder />
           <div
-            className={!isGameOver ? "snork-declare" : ""}
+            className={!isGameOver ? "snork-button" : ""}
             onClick={() => {
               Rune.actions.declareSnork()
             }}
