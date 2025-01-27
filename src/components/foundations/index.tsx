@@ -17,7 +17,7 @@ export function Foundations() {
             {topCard ? (
               <img
                 className={clsx("card", "foundation", f.length > 1 && "pile")}
-                src={`/card-themes/default/cards/suit${topCard.suit}/rank${topCard.rank - 1}.png`}
+                src={`card-themes/default/cards/suit${topCard.suit}/rank${topCard.rank - 1}.png`}
               />
             ) : (
               <CardPlaceholder />

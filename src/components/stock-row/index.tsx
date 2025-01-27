@@ -40,7 +40,7 @@ export function StockRow({ tableau, playerIndex }: StockRowProps) {
         {lastWasteCardIndex !== lastStockCardIndex ? (
           <img
             className="card stock pile"
-            src={`/card-themes/default/cards/card-back${playerIndex}.png`}
+            src={`card-themes/default/cards/card-back${playerIndex}.png`}
             onClick={() => Rune.actions.turnStock()}
           />
         ) : (
@@ -67,7 +67,7 @@ export function StockRow({ tableau, playerIndex }: StockRowProps) {
                 <img
                   key={`card-${card.id}`}
                   className={`card ${idx === arr.length - 1 ? "draggable" : ""}`}
-                  src={`/card-themes/default/cards/suit${card.suit}/rank${card.rank - 1}.png`}
+                  src={`card-themes/default/cards/suit${card.suit}/rank${card.rank - 1}.png`}
                   draggable={idx === arr.length - 1}
                   onDragStart={(e) => {
                     handleCardDragStart(e, {

@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "vite --host",
     "build": "pnpm run lint && tsc -b && vite build",
-    "upload": "pnpm run build && npx rune-games-cli@latest upload",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "upload": "pnpm run build && pnpm dlx rune-games-cli@latest upload",
+    "lint": "eslint src",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "clsx": "^2.1.1",

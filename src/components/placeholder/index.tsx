@@ -3,7 +3,7 @@ export function CardPlaceholder({ onClick }: { onClick?: () => void }) {
     <img
       className="card"
       onClick={onClick}
-      src={`/card-themes/default/cards/card-placeholder.png`}
+      src={`card-themes/default/cards/card-placeholder.png`}
     />
   )
 }
@@ -13,7 +13,7 @@ export function WastePlaceholder({ onClick }: { onClick?: () => void }) {
     <img
       className="waste-placeholder"
       onClick={onClick}
-      src={`/card-themes/default/cards/card-placeholder.png`}
+      src={`card-themes/default/cards/card-placeholder.png`}
     />
   )
 }

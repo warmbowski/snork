@@ -29,7 +29,7 @@ export function WorkRow({ workStacks, snorkPile, isGameOver }: WorkRowProps) {
               "snork-top",
               snorkPile.length > 1 && "pile"
             )}
-            src={`/card-themes/default/cards/suit${upSnorkCard.suit}/rank${upSnorkCard.rank - 1}.png`}
+            src={`card-themes/default/cards/suit${upSnorkCard.suit}/rank${upSnorkCard.rank - 1}.png`}
             draggable
             onDragStart={(e) => {
               handleCardDragStart(e, {
@@ -70,7 +70,7 @@ export function WorkRow({ workStacks, snorkPile, isGameOver }: WorkRowProps) {
                         key={`card-${card.id}`}
                         className="card draggable"
                         style={{ zIndex: idx }}
-                        src={`/card-themes/default/cards/suit${card.suit}/rank${card.rank - 1}.png`}
+                        src={`card-themes/default/cards/suit${card.suit}/rank${card.rank - 1}.png`}
                         draggable
                         onDragStart={(e) => {
                           // // TODO: create a better custom drage image for movng stacked cards
