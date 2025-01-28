@@ -82,11 +82,20 @@ globalStyle(".card", {
 globalStyle(".card.draggable", {
   // @ts-expect-error -webkit-user-drag is not in the types
   WebkitUserDrag: "element",
+  WebkitTouchCallout: "none",
   transformOrigin: "center",
+})
+
+globalStyle(".card.drag-preview", {
+  opacity: 1,
+  border: "3px solid white",
+  // transform: "scale(1.1)",
+  // zIndex: 100,
 })
 
 globalStyle(".card.card.draggable.dragging", {
   transform: "none",
+  opacity: 0.5,
 })
 
 globalStyle(".card.draggable:hover", {

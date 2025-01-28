@@ -11,6 +11,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@atlaskit/pragmatic-drag-and-drop": "^1.4.0",
     "clsx": "^2.1.1",
     "jotai": "^2.10.0",
     "object-path": "^0.11.8",

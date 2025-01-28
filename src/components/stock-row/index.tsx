@@ -1,13 +1,10 @@
 import { useEffect } from "react"
 import { Tableau } from "../../logic/types"
-import {
-  handleCardDragEnd,
-  handleCardDragStart,
-} from "../card-dropzone/handlers"
 import { CardPlaceholder } from "../placeholder"
 import { STALE_COUNT_TRESHOLD } from "../../constants"
 import { useAtom } from "jotai"
 import { staleCountAtom } from "../../game-state"
+import { Card } from "../card"
 
 interface StockRowProps {
   tableau: Tableau
@@ -38,7 +35,7 @@ export function StockRow({ tableau, playerIndex }: StockRowProps) {
     <div className="stock-row">
       <div>
         {lastWasteCardIndex !== lastStockCardIndex ? (
-          <img
+          <Card
             className="card stock pile"
             src={`card-themes/default/cards/card-back${playerIndex}.png`}
             onClick={() => Rune.actions.turnStock()}
@@ -64,23 +61,17 @@ export function StockRow({ tableau, playerIndex }: StockRowProps) {
             )
             .map((card, idx, arr) => {
               return (
-                <img
+                <Card
                   key={`card-${card.id}`}
                   className={`card ${idx === arr.length - 1 ? "draggable" : ""}`}
-                  src={`card-themes/default/cards/suit${card.suit}/rank${card.rank - 1}.png`}
-                  draggable={idx === arr.length - 1}
-                  onDragStart={(e) => {
-                    handleCardDragStart(e, {
-                      src: {
-                        pile: "stockPile",
-                        cardId: card.id,
-                      },
-                    })
+                  card={card}
+                  dragData={{
+                    src: {
+                      pile: "stockPile",
+                      cardId: card.id,
+                    },
                   }}
-                  onDragEnd={(e) => {
-                    handleCardDragEnd(e)
-                    setStaleCount(0)
-                  }}
+                  onDrop={() => setStaleCount(0)}
                 />
               )
             })}
