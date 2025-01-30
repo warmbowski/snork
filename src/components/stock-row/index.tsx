@@ -94,6 +94,7 @@ export function StockRow({ tableau, playerIndex }: StockRowProps) {
                       setMoveData(null)
                     } else {
                       setMoveData({
+                        playerIndex,
                         src: {
                           pile: "stockPile",
                           cardId: card.id,

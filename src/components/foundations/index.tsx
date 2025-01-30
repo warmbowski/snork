@@ -18,8 +18,14 @@ export function Foundations() {
             key={`foundation-${idx}`}
             pile="foundation"
             slot={idx}
-            playerScoreIdx={
-              topCard?.playerId ? getPlayerIndex(game, topCard.playerId) : null
+            scoreIt={
+              topCard?.playerId
+                ? {
+                    cardId: topCard.id,
+                    playerIndex: getPlayerIndex(game, topCard.playerId),
+                    playerId: topCard.playerId,
+                  }
+                : undefined
             }
           >
             {topCard ? (

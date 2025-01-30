@@ -6,9 +6,9 @@ Snork! is a competitive multiplayer "solitaire-like" game for two or more player
 
 #### Bugz
 
-- [ ] Freeze game (no more plays) when someone declares Snork! (end game button)
+- [x] Freeze game (no more plays) when someone declares Snork! (end game button)
 - [ ] Stuck button not showing after 3x through stock pile with no plays
-- [ ] Inconsistent scoring animation
+- [x] Inconsistent scoring animation
 
 #### Basic gameplay to implement:
 
@@ -36,7 +36,7 @@ Snork! is a competitive multiplayer "solitaire-like" game for two or more player
 
 #### Expanded gameplay ideas to implement:
 
-- [ ] Support multiplayer > 2
+- [x] Support multiplayer > 2
 - [ ]
 - [ ] Persist game stats for each player: PRs, Totals, etc
 

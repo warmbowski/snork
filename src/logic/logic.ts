@@ -8,8 +8,8 @@ import {
   getMovingCards,
   getPlayerIndex,
   removeCardsFromSrcPile,
-} from "./logic/utils"
-import { GameState, MoveData, Tableau } from "./logic/types"
+} from "./utils"
+import { GameState, MoveData, Tableau } from "./types"
 
 type GameActions = {
   voteStartGame: () => void
@@ -113,6 +113,8 @@ Rune.initLogic({
       }
     },
     moveCard: (moveData, { game, playerId }) => {
+      if (game.gameOverResults) return
+
       switch (moveData.dest.pile) {
         case "foundation": {
           const destPile = game.foundations[moveData.dest?.slot || 0]

@@ -1,21 +1,21 @@
 import { useEffect, useMemo, useRef, useState } from "react"
-import { useAtom } from "jotai"
+import { useAtom, useSetAtom } from "jotai"
 import { gameStateAtom, staleCountAtom, yourPlayerIdAtom } from "../game-state"
 import { usePreloadAssets } from "./preload-theme"
 import { getFoundationsScoreMap, getPlayerIndex } from "../logic/utils"
 import { Foundations } from "./foundations"
 import { StockRow } from "./stock-row"
 import { WorkRow } from "./work-row"
-
-type ScoreMap = Record<string, number>
+import { ScoreMap } from "../logic/types"
+import { ScoreTotals } from "./score-totals"
 
 export function App() {
+  const rootRef = useRef<HTMLDivElement>(null)
   const [game, setGame] = useAtom(gameStateAtom)
   const [yourPlayerId, setYourPlayerId] = useAtom(yourPlayerIdAtom)
-  const [, setStaleCount] = useAtom(staleCountAtom)
+  const setStaleCount = useSetAtom(staleCountAtom)
   const [spectateIndex, setSpectateIndex] = useState(0)
   const [totals, setTotals] = useState<ScoreMap>({})
-  const rootRef = useRef<HTMLDivElement>(null)
 
   const spectateId = useMemo(() => {
     return game?.playerIds[spectateIndex]
@@ -94,19 +94,11 @@ export function App() {
   return (
     <div ref={rootRef} className={`app player${playerIndex}`}>
       <div className={`common-row player-count-${game.playerIds.length}`}>
-        <div className="totals">
-          {game.playerIds.map((playerId, idx) => (
-            <div
-              key={playerId}
-              className={`badge player${idx}`}
-              style={
-                playerId === yourPlayerId ? { border: "1px solid white" } : {}
-              }
-            >
-              {totals[playerId] || 0}
-            </div>
-          ))}
-        </div>
+        <ScoreTotals
+          playerIds={game.playerIds}
+          yourPlayerId={yourPlayerId}
+          totals={totals}
+        />
         <Foundations />
       </div>
       {game.gameStarted ? (

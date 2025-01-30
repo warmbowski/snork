@@ -8,6 +8,8 @@ export type Suit = 0 | 1 | 2 | 3
 export type Color = 0 | 1
 export type Back = 0 | 1
 
+export type ScoreMap = Record<string, number>
+
 export interface Card {
   id: number
   rank: Rank
@@ -60,6 +62,7 @@ export interface DestPile {
   slot: number
 }
 export interface MoveData {
+  playerIndex: number
   src: SnorkPileSrc | StockPileSrc | WorkPileSrc
   dest?: DestPile
 }

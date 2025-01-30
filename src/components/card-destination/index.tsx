@@ -1,24 +1,31 @@
 import { useAtom } from "jotai"
 import { moveCardDataAtom } from "../../game-state"
 import clsx from "clsx"
-import { ReactNode, useEffect, useMemo, useRef, useState } from "react"
+import { ReactNode, useEffect, useMemo, useState } from "react"
 import { SCORE_ANIMATION_DURATION_MS } from "../../constants"
+
+interface ScoreIt {
+  cardId: number
+  playerId: string
+  playerIndex: number
+  score?: number
+}
 
 interface CardDestinationProps {
   children: ReactNode
   pile: "workPile" | "foundation"
   slot: number
-  playerScoreIdx?: number | null
+  scoreIt?: ScoreIt
 }
 
 export function CardDestination({
   children,
   pile,
   slot,
-  playerScoreIdx = null,
+  scoreIt,
 }: CardDestinationProps) {
-  const divRef = useRef<HTMLDivElement>(null)
   const [moveData, setMoveData] = useAtom(moveCardDataAtom)
+  const [lastScore, setLastScore] = useState<ScoreIt | null>(null)
   const [animateScore, setAnimateScore] = useState<number | null>(null)
 
   const active = useMemo(() => {
@@ -29,21 +36,18 @@ export function CardDestination({
   }, [moveData?.src, pile, slot])
 
   useEffect(() => {
-    if (playerScoreIdx !== null) {
-      setAnimateScore(playerScoreIdx)
+    if (scoreIt && scoreIt.cardId !== lastScore?.cardId) {
+      setLastScore(scoreIt)
+      setAnimateScore(scoreIt.playerIndex)
 
       setTimeout(() => {
         setAnimateScore(null)
       }, SCORE_ANIMATION_DURATION_MS)
     }
-    return () => {
-      // cleanup
-    }
-  }, [playerScoreIdx])
+  }, [lastScore?.cardId, scoreIt])
 
   return (
     <div
-      ref={divRef}
       className={clsx({
         dropzone: true,
         active: active,
@@ -57,7 +61,7 @@ export function CardDestination({
     >
       {children}
       {animateScore !== null && (
-        <span className={`animate-score ${"player" + playerScoreIdx}`}>+1</span>
+        <span className={`animate-score ${"player" + animateScore}`}>+1</span>
       )}
     </div>
   )

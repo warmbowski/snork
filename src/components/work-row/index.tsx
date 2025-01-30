@@ -47,6 +47,7 @@ export function WorkRow({ tableau, isGameOver, playerIndex }: WorkRowProps) {
                 setMoveData(null)
               } else {
                 setMoveData({
+                  playerIndex,
                   src: {
                     pile: "snorkPile",
                     cardId: upSnorkCard.id,
@@ -92,6 +93,7 @@ export function WorkRow({ tableau, isGameOver, playerIndex }: WorkRowProps) {
                             setMoveData(null)
                           } else {
                             setMoveData({
+                              playerIndex,
                               src: {
                                 pile: "workPile",
                                 slot,
