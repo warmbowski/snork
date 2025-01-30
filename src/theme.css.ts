@@ -20,20 +20,24 @@ export const vars = createGlobalTheme(":root", {
       text: getContrastYIQ("#14764a"),
     },
     player1: {
-      background: "#764a14",
-      text: getContrastYIQ("#764a14"),
-    },
-    player2: {
       background: "#761914",
       text: getContrastYIQ("#761914"),
+      back: "#9c1e14",
     },
-    player3: {
-      background: "#4a1476",
-      text: getContrastYIQ("#4a1476"),
-    },
-    player4: {
+    player2: {
       background: "#145876",
       text: getContrastYIQ("#145876"),
+      back: "##212173",
+    },
+    player3: {
+      background: "#764a14",
+      text: getContrastYIQ("#764a14"),
+      back: "#594028",
+    },
+    player4: {
+      background: "#4a1476",
+      text: getContrastYIQ("#4a1476"),
+      back: "##6a4c94",
     },
     liteText: "#e6e6e6",
     darkText: "#333",

@@ -4,6 +4,12 @@
 
 Snork! is a competitive multiplayer "solitaire-like" game for two or more players, using a deck of cards for each player. The players race to get rid of the cards from their "Snork piles" while scoring points by building from the ace up onto common foundations. The first player to deplete their Snork pile gets to end the game. At this point, the scoring in the foundations are tallied for all players, and their remaining Snork pile is subtracted from their score. The player with the highest score wins.
 
+#### Bugz
+
+- [ ] Freeze game (no more plays) when someone declares Snork! (end game button)
+- [ ] Stuck button not showing after 3x through stock pile with no plays
+- [ ] Inconsistent scoring animation
+
 #### Basic gameplay to implement:
 
 - [x] Scaffold in basic multiplayer game layout for Rune

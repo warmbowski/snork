@@ -62,6 +62,9 @@ export function App() {
         // add action sounds effects here
         if (action && action.name === "moveCard") {
           // playSound("moveCard")
+          if (action.params.src.pile === "stockPile") {
+            setStaleCount(0)
+          }
         }
         if (action && action.name === "turnStock") {
           // playSound("turnStock")
@@ -90,7 +93,7 @@ export function App() {
 
   return (
     <div ref={rootRef} className={`app player${playerIndex}`}>
-      <div className="common-row">
+      <div className={`common-row player-count-${game.playerIds.length}`}>
         <div className="totals">
           {game.playerIds.map((playerId, idx) => (
             <div
@@ -114,8 +117,8 @@ export function App() {
               return (
                 <div className="tableau" key={`tableau-${t.playerId}`}>
                   <WorkRow
-                    snorkPile={t.snorkPile}
-                    workStacks={t.workStacks}
+                    tableau={t}
+                    playerIndex={playerIndex}
                     isGameOver={!!game.gameOverResults}
                   />
                   <StockRow tableau={t} playerIndex={playerIndex} />

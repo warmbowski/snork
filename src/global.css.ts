@@ -1,19 +1,10 @@
-import {
-  globalKeyframes,
-  globalStyle /* globalFontFace */,
-} from "@vanilla-extract/css"
+import { globalKeyframes, globalStyle } from "@vanilla-extract/css"
 import { vars } from "./theme.css"
-
-// globalFontFace("fibberish", {
-//   src: 'url("./assets/fonts/Fibberish/fibberish.ttf") format("truetype")',
-//   fontWeight: "normal",
-// })
 
 globalStyle("html, body", {
   padding: 0,
   margin: 0,
   fontSize: 14,
-  // fontFamily: vars.font.family,
   minHeight: "100vh",
   overflow: "hidden",
 })
@@ -73,37 +64,47 @@ globalStyle(".player3", {
 })
 
 globalStyle(".card", {
+  display: "block",
   width: "16vw",
   height: "22vw",
   borderRadius: 6,
-  marginBottom: "4px",
+})
+globalStyle(".card.selectable:hover", {
+  cursor: "pointer",
+})
+globalStyle(".card.selectable.selected", {
+  transform: "translateY(-2vw)",
 })
 
-globalStyle(".card.draggable", {
-  // @ts-expect-error -webkit-user-drag is not in the types
-  WebkitUserDrag: "element",
-  WebkitTouchCallout: "none",
-  transformOrigin: "center",
+globalStyle(".dropzone", {
+  position: "relative",
+  height: "fit-content",
+  borderRadius: 5,
 })
-
-globalStyle(".card.drag-preview", {
-  opacity: 1,
-  border: "3px solid white",
-  // transform: "scale(1.1)",
-  // zIndex: 100,
+globalStyle(".dropzone.active", {
+  outline: "none",
+  boxShadow: "0 0 4px 2px #eff166",
+  cursor: "pointer",
 })
-
-globalStyle(".card.card.draggable.dragging", {
-  transform: "none",
-  opacity: 0.5,
-})
-
-globalStyle(".card.draggable:hover", {
-  transform: "translateY(-1vw)",
+globalStyle(".dropzone > .animate-score", {
+  content: "+1",
+  position: "absolute",
+  bottom: "20%",
+  left: "20%",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  minWidth: "1.8em",
+  height: "1.8em",
+  borderRadius: "50%",
+  filter: "saturate(1.3)",
+  opacity: 0,
+  animation: "score 0.5s linear",
+  animationIterationCount: "1",
+  animationFillMode: "initial",
 })
 
 globalStyle(".pile", {
-  marginBottom: "4px",
   boxShadow:
     "1px 1px 1px white, 2px 2px 1px black, 3px 3px 1px white, 4px 4px 1px black",
 })
@@ -114,19 +115,16 @@ globalStyle(".playerSelect", {
   display: "flex",
   justifyContent: "center",
 })
-
 globalStyle(".playerSelect img", {
   width: "3rem",
   height: "3rem",
   borderRadius: "50%",
   margin: "0 0.5rem",
 })
-
 globalStyle(".playerSelect img:hover", {
   cursor: "pointer",
   scale: 1.1,
 })
-
 globalStyle(".playerSelect img.selected", {
   border: "2px solid white",
 })
@@ -168,10 +166,9 @@ globalStyle(".work-row", {
   marginBottom: "1rem",
   columnGap: "1rem",
 })
-
 globalStyle(".work-row .badge", {
   position: "relative",
-  top: "-1.5em",
+  top: "-0.5em",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -182,7 +179,6 @@ globalStyle(".work-row .badge", {
   filter: "saturate(1.3)",
   margin: "auto",
 })
-
 globalStyle(".work-row .snork-button", {
   textAlign: "center",
   fontWeight: "bold",
@@ -196,12 +192,7 @@ globalStyle(".work-row .snork-button:hover", {
   cursor: "pointer",
   scale: 1.1,
 })
-
-globalStyle(".work-row .snork-top:hover", {
-  cursor: "pointer",
-  transform: "none",
-})
-
+globalStyle(".work-row .snork-container", {})
 globalStyle(".work-row .work-stacks", {
   display: "flex",
   gap: "0.25rem",
@@ -211,17 +202,11 @@ globalStyle(".work-stack", {
   display: "flex",
   flexDirection: "column",
 })
-
 globalStyle(".work-stack .card", {
   marginTop: "-16vw",
 })
-
 globalStyle(".work-stack .card:first-child", {
   marginTop: "0",
-})
-
-globalStyle(".work-stack .card:last-child:hover", {
-  cursor: "pointer",
 })
 
 globalStyle(".stock-row", {
@@ -232,7 +217,6 @@ globalStyle(".stock-row", {
   marginBottom: "1rem",
   columnGap: "1rem",
 })
-
 globalStyle(".stock-row .stuck-button", {
   textAlign: "center",
   fontWeight: "bold",
@@ -252,65 +236,64 @@ globalStyle(".stock-row .stuck-button.voted:hover", {
   cursor: "not-allowed",
   scale: 1,
 })
-
 globalStyle(".stock-row .stock:hover", {
   cursor: "pointer",
 })
-
 globalStyle(".stock-row .waste", {
+  display: "flex",
   minWidth: "30vw",
 })
-
 globalStyle(".stock-row .waste .card", {
   marginLeft: "-10vw",
 })
-
 globalStyle(".stock-row .waste .card:first-child", {
   marginLeft: "0",
 })
-
 globalStyle(".stock-row .waste .card:last-child:hover", {
   cursor: "pointer",
 })
 
 globalStyle(".common-row", {
-  display: "flex",
-  flexDirection: "row-reverse",
-  alignItems: "stretch",
+  width: "100%",
+  position: "relative",
   color: vars.colors.foundations.text,
   backgroundColor: vars.colors.foundations.background,
   borderBottomWidth: "1px",
   borderBottomStyle: "solid",
   borderBottomColor: vars.colors.liteText,
-  borderRadius: "0 0 10px 10px",
 })
-
 globalStyle(".common-row .foundations", {
+  display: "grid",
+  justifyItems: "center",
+  gridTemplateColumns: "repeat(4, minmax(16vw, 1fr))",
+  padding: "4px",
+  rowGap: "4px",
+  paddingTop: "calc(1.8em + 8px)",
+  paddingBottom: "8px",
+  overflowY: "scroll",
+})
+globalStyle(".common-row .foundations.player-count-3", {
+  gridTemplateColumns: "repeat(6, minmax(16vw, 1fr))",
+})
+globalStyle(".common-row .foundations.player-count-4", {
+  gridTemplateColumns: "repeat(8, minmax(16vw, 1fr))",
+})
+globalStyle(".common-row .totals", {
+  position: "absolute",
+  top: "0",
   width: "100%",
   display: "flex",
-  flexWrap: "wrap",
-  justifyContent: "center",
-  alignItems: "flex-start",
-  paddingTop: "1rem",
-  paddingBottom: "1rem",
-  gap: "0.5rem",
+  flexDirection: "row",
+  justifyContent: "space-evenly",
+  margin: "4px auto",
 })
-
-globalStyle(".common-row .totals", {
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  gap: "1rem",
-  margin: "0 6px",
-})
-
 globalStyle(".common-row .badge", {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  minWidth: "1.8em",
+  minWidth: "3em",
   height: "1.8em",
-  borderRadius: "50%",
+  borderRadius: "6px",
   filter: "saturate(1.3)",
 })
 
@@ -322,4 +305,10 @@ globalKeyframes("shake", {
   "90%": { transform: "rotate(-10deg)" },
   "95%": { transform: "rotate(10deg)" },
   "100%": { transform: "rotate(0deg)" },
+})
+
+globalKeyframes("score", {
+  "0%": { opacity: 1, transform: "translateY(0)" },
+  "50%": { opacity: 1, transform: "translateY(-2em)" },
+  "100%": { opacity: 0, transform: "translateY(-3em)" },
 })

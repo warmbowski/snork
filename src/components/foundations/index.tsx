@@ -2,18 +2,26 @@ import { useAtom } from "jotai"
 import { gameStateAtom } from "../../game-state"
 import { CardPlaceholder } from "../placeholder"
 import clsx from "clsx"
-import { CardDropzone } from "../card-dropzone"
+import { CardDestination } from "../card-destination"
+import { getPlayerIndex } from "../../logic/utils"
 
 export function Foundations() {
   const [game] = useAtom(gameStateAtom)
 
   return (
-    <div className="foundations">
+    <div className={`foundations player-count-${game?.playerIds.length}`}>
       {game?.foundations.map((f, idx) => {
         const topCard = f ? f[f.length - 1] : null
 
         return (
-          <CardDropzone key={`foundation-${idx}`} pile="foundation" slot={idx}>
+          <CardDestination
+            key={`foundation-${idx}`}
+            pile="foundation"
+            slot={idx}
+            playerScoreIdx={
+              topCard?.playerId ? getPlayerIndex(game, topCard.playerId) : null
+            }
+          >
             {topCard ? (
               <img
                 className={clsx("card", "foundation", f.length > 1 && "pile")}
@@ -22,7 +30,7 @@ export function Foundations() {
             ) : (
               <CardPlaceholder />
             )}
-          </CardDropzone>
+          </CardDestination>
         )
       })}
     </div>

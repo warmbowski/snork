@@ -29,8 +29,8 @@ declare global {
 }
 
 Rune.initLogic({
-  minPlayers: 1,
-  maxPlayers: 2,
+  minPlayers: 2,
+  maxPlayers: 4,
   // persistPlayerData: true,
   setup: (allPlayerIds) => {
     return {
@@ -38,7 +38,10 @@ Rune.initLogic({
       playerIds: allPlayerIds,
       foundations: allPlayerIds.flatMap(() => new Array(4).fill([])),
       tableaus: allPlayerIds.map((playerId) => {
-        const deck = createDeck(playerId)
+        const deck = createDeck(
+          playerId,
+          allPlayerIds.findIndex((id) => id === playerId)
+        )
         return createTableau(deck)
       }),
       snorkDeclared: null,

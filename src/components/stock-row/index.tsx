@@ -1,10 +1,11 @@
-import { useEffect } from "react"
+import { useEffect, useMemo, useRef } from "react"
 import { Tableau } from "../../logic/types"
 import { CardPlaceholder } from "../placeholder"
 import { STALE_COUNT_TRESHOLD } from "../../constants"
 import { useAtom } from "jotai"
-import { staleCountAtom } from "../../game-state"
+import { moveCardDataAtom, staleCountAtom } from "../../game-state"
 import { Card } from "../card"
+import clsx from "clsx"
 
 interface StockRowProps {
   tableau: Tableau
@@ -12,10 +13,16 @@ interface StockRowProps {
 }
 
 export function StockRow({ tableau, playerIndex }: StockRowProps) {
+  const stockThrottled = useRef(false)
+  const [moveData, setMoveData] = useAtom(moveCardDataAtom)
   const [staleCount, setStaleCount] = useAtom(staleCountAtom)
-  const lastWasteCardIndex =
-    tableau.wastePile[tableau.wastePile.length - 1]?.[1] ?? -1
-  const lastStockCardIndex = tableau.stockPile.length - 1
+
+  const topCards = useMemo(() => {
+    return {
+      wasteIdx: tableau.wastePile[tableau.wastePile.length - 1]?.[1] ?? -1,
+      stockIdx: tableau.stockPile.length - 1,
+    }
+  }, [tableau.stockPile.length, tableau.wastePile])
 
   useEffect(() => {
     if (tableau.wastePile.length === 0) {
@@ -34,11 +41,24 @@ export function StockRow({ tableau, playerIndex }: StockRowProps) {
   return (
     <div className="stock-row">
       <div>
-        {lastWasteCardIndex !== lastStockCardIndex ? (
-          <Card
+        {topCards.wasteIdx !== topCards.stockIdx ? (
+          <img
             className="card stock pile"
             src={`card-themes/default/cards/card-back${playerIndex}.png`}
-            onClick={() => Rune.actions.turnStock()}
+            onClick={() => {
+              // Throttle stock turning action as it can easily be spammed
+              // Rune limit is 10 actions per second
+              if (stockThrottled.current) return
+              stockThrottled.current = true
+              setTimeout(() => {
+                stockThrottled.current = false
+              }, 300)
+
+              if (moveData?.src.pile === "stockPile") {
+                setMoveData(null)
+              }
+              Rune.actions.turnStock()
+            }}
           />
         ) : (
           <CardPlaceholder onClick={() => Rune.actions.turnStock()} />
@@ -63,15 +83,24 @@ export function StockRow({ tableau, playerIndex }: StockRowProps) {
               return (
                 <Card
                   key={`card-${card.id}`}
-                  className={`card ${idx === arr.length - 1 ? "draggable" : ""}`}
+                  className={clsx({
+                    card: true,
+                    selectable: idx === arr.length - 1,
+                    selected: moveData && moveData.src.cardId === card.id,
+                  })}
                   card={card}
-                  dragData={{
-                    src: {
-                      pile: "stockPile",
-                      cardId: card.id,
-                    },
+                  onClick={() => {
+                    if (moveData && moveData.src.cardId === card.id) {
+                      setMoveData(null)
+                    } else {
+                      setMoveData({
+                        src: {
+                          pile: "stockPile",
+                          cardId: card.id,
+                        },
+                      })
+                    }
                   }}
-                  onDrop={() => setStaleCount(0)}
                 />
               )
             })}

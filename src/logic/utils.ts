@@ -10,13 +10,14 @@ import {
   GameResult,
 } from "./types"
 
-export function createDeck(playerId: PlayerId): Deck {
+export function createDeck(playerId: PlayerId, playerIndex: number): Deck {
   const cards: Card[] = []
   for (let i = 0; i < 52; i++) {
     const rank = ((i % 13) + 1) as Rank // 1 to 13
     const suit = Math.floor(i / 13) as Suit // 0 to 3
     const color = suit < 2 ? 0 : 1 // 0 for black, 1 for red
-    cards.push({ id: i, rank, suit, color, playerId })
+    const back = playerIndex as 0 | 1 // 0 for red, 1 for blue
+    cards.push({ id: i, rank, suit, color, back, playerId })
   }
 
   return {
