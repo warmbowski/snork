@@ -119,13 +119,27 @@ export function App() {
             })}
         </div>
       ) : (
-        <div
-          className={`ready-button ${game.tableaus[playerIndex].readyToStart ? "voted" : ""}`}
-          onClick={() => {
-            Rune.actions.voteStartGame()
-          }}
-        >
-          Ready to start
+        <div className="waiting">
+          <h1>Snork!</h1>
+          <p>
+            A fast-paced solitaire-like card game where players try to be the
+            first to get rid of their Snork pile and declare "Snork!", while
+            playing as many cards as possible in the shared foundations at the
+            top. They score +1 for each of their cards in the foundations, and
+            will be penalized -2 for any leftover snork pile cards at the end of
+            the game. Click the botton when you are ready to start.
+          </p>
+          <h3>Waiting for all players to be ready...</h3>
+          {yourPlayerId && (
+            <div
+              className={`ready-button ${game.tableaus[playerIndex].readyToStart ? "voted" : ""}`}
+              onClick={() => {
+                Rune.actions.voteStartGame()
+              }}
+            >
+              {game.tableaus[playerIndex].readyToStart ? "Ready!" : "Ready?"}
+            </div>
+          )}
         </div>
       )}
       {!yourPlayerId && (

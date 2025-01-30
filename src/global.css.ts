@@ -138,6 +138,12 @@ globalStyle(".tableau", {
   gap: "1rem",
 })
 
+globalStyle(".waiting", {
+  textAlign: "center",
+  margin: "10%",
+  borderRadius: "6px",
+})
+
 globalStyle(".ready-button", {
   textAlign: "center",
   fontWeight: "bold",
@@ -150,11 +156,10 @@ globalStyle(".ready-button", {
 })
 globalStyle(".ready-button:hover", {
   cursor: "pointer",
-  scale: 1.1,
+  boxShadow: "0 0 4px white",
 })
 globalStyle(".ready-button.voted", {
   backgroundColor: "transparent",
-  scale: 1,
 })
 
 globalStyle(".work-row", {
