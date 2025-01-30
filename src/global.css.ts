@@ -94,8 +94,9 @@ globalStyle(".dropzone > .animate-score", {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  minWidth: "1.8em",
-  height: "1.8em",
+  minWidth: "2em",
+  height: "2em",
+  fontSize: "1.5em",
   borderRadius: "50%",
   filter: "saturate(1.3)",
   opacity: 0,
@@ -116,8 +117,8 @@ globalStyle(".playerSelect", {
   justifyContent: "center",
 })
 globalStyle(".playerSelect img", {
-  width: "3rem",
-  height: "3rem",
+  width: "16vw",
+  height: "16vw",
   borderRadius: "50%",
   margin: "0 0.5rem",
 })
@@ -268,7 +269,7 @@ globalStyle(".common-row .foundations", {
   gridTemplateColumns: "repeat(4, minmax(16vw, 1fr))",
   padding: "4px",
   rowGap: "4px",
-  paddingTop: "calc(1.8em + 8px)",
+  paddingTop: "calc(8vw + 8px)",
   paddingBottom: "8px",
   overflowY: "scroll",
 })
@@ -292,9 +293,13 @@ globalStyle(".common-row .badge", {
   alignItems: "center",
   justifyContent: "center",
   minWidth: "3em",
-  height: "1.8em",
+  height: "8vw",
   borderRadius: "6px",
   filter: "saturate(1.3)",
+})
+globalStyle(".common-row .badge.me", {
+  border: "2px solid white",
+  animation: "5s infinite pulse-border",
 })
 
 // animations
@@ -311,4 +316,11 @@ globalKeyframes("score", {
   "0%": { opacity: 1, transform: "translateY(0)" },
   "50%": { opacity: 1, transform: "translateY(-2em)" },
   "100%": { opacity: 0, transform: "translateY(-3em)" },
+})
+
+globalKeyframes("pulse-border", {
+  "0%": { borderWidth: 2 },
+  "5%": { borderWidth: 1 },
+  "10%": { borderWidth: 2 },
+  "100%": { borderWidth: 2 },
 })

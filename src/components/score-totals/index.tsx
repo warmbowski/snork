@@ -16,8 +16,7 @@ export function ScoreTotals({
       {playerIds.map((playerId, idx) => (
         <div
           key={playerId}
-          className={`badge player${idx}`}
-          style={playerId === yourPlayerId ? { border: "1px solid white" } : {}}
+          className={`badge player${idx} ${playerId === yourPlayerId ? "me" : ""}`}
         >
           {totals[playerId] || 0}
         </div>
