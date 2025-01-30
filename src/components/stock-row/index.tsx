@@ -40,7 +40,7 @@ export function StockRow({ tableau, playerIndex }: StockRowProps) {
 
   return (
     <div className="stock-row">
-      <div>
+      <div className="stock-container">
         {topCards.wasteIdx !== topCards.stockIdx ? (
           <img
             className="card stock pile"
@@ -68,7 +68,7 @@ export function StockRow({ tableau, playerIndex }: StockRowProps) {
             className={`stuck-button ${tableau.isStuck ? "voted" : ""}`}
             onClick={() => Rune.actions.voteStuck()}
           >
-            Stuck
+            {tableau.isStuck ? "Unstuck" : `I'm Stuck`}
           </div>
         )}
       </div>

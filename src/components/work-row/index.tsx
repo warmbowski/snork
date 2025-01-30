@@ -37,8 +37,6 @@ export function WorkRow({ tableau, isGameOver, playerIndex }: WorkRowProps) {
             card={upSnorkCard}
             className={clsx({
               card: true,
-              // "snork-top": true,
-              // pile: tableau.snorkPile.length > 1,
               selectable: true,
               selected: moveData && moveData.src.cardId === upSnorkCard.id,
             })}
@@ -59,7 +57,7 @@ export function WorkRow({ tableau, isGameOver, playerIndex }: WorkRowProps) {
           <div className="badge base-color">{tableau.snorkPile.length}</div>
         </div>
       ) : (
-        <div>
+        <div className="snork-container">
           <CardPlaceholder />
           <div
             className={!isGameOver ? "snork-button" : ""}

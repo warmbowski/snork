@@ -61,15 +61,14 @@ Rune.initLogic({
     },
     markStockNotStale: (_, { game, playerId }) => {
       game.tableaus[getPlayerIndex(game, playerId)].stockIsStale = false
+      game.tableaus[getPlayerIndex(game, playerId)].isStuck = false
     },
     declareSnork: (_, { game, playerId }) => {
       game.snorkDeclared = playerId
     },
     voteStuck: (_, { game, playerId }) => {
-      const { stockIsStale } = game.tableaus[getPlayerIndex(game, playerId)]
-      if (stockIsStale) {
-        game.tableaus[getPlayerIndex(game, playerId)].isStuck = true
-      }
+      const { isStuck } = game.tableaus[getPlayerIndex(game, playerId)]
+      game.tableaus[getPlayerIndex(game, playerId)].isStuck = !isStuck
     },
     endGame: (_, { game }) => {
       computeGameOverResults(game)
@@ -88,8 +87,8 @@ Rune.initLogic({
         const bottomCard = tableau.stockPile[0]
         tableau.stockPile = [...tableau.stockPile.slice(1), bottomCard]
         tableau.wastePile = []
-        tableau.isStuck = false
         tableau.stockIsStale = false
+        tableau.isStuck = false
       })
     },
     turnStock: (_, { game, playerId }) => {

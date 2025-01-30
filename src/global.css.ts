@@ -100,6 +100,7 @@ globalStyle(".dropzone > .animate-score", {
   borderRadius: "50%",
   filter: "saturate(1.3)",
   opacity: 0,
+  boxShadow: "0 0 4px 2px white",
   animation: "score 0.5s linear",
   animationIterationCount: "1",
   animationFillMode: "initial",
@@ -155,9 +156,6 @@ globalStyle(".ready-button.voted", {
   backgroundColor: "transparent",
   scale: 1,
 })
-globalStyle(".ready-button.voted:hover", {
-  cursor: "not-allowed",
-})
 
 globalStyle(".work-row", {
   display: "flex",
@@ -168,32 +166,38 @@ globalStyle(".work-row", {
   columnGap: "1rem",
 })
 globalStyle(".work-row .badge", {
-  position: "relative",
-  top: "-0.5em",
+  position: "absolute",
+  bottom: "-1em",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  width: "1.8em",
-  height: "1.8em",
+  width: "2em",
+  height: "2em",
   borderRadius: "50%",
   border: "1px solid white",
   filter: "saturate(1.3)",
-  margin: "auto",
 })
 globalStyle(".work-row .snork-button", {
+  width: "max-content",
   textAlign: "center",
   fontWeight: "bold",
-  fontSize: "1.4rem",
-  animation: "2s infinite shake",
+  fontSize: "1.2rem",
   borderRadius: "6px",
   border: "1px solid white",
   backgroundColor: vars.colors.foundations.background,
+  padding: 4,
+  animation: "2s infinite shake",
 })
 globalStyle(".work-row .snork-button:hover", {
   cursor: "pointer",
-  scale: 1.1,
+  boxShadow: "0 0 4px white",
 })
-globalStyle(".work-row .snork-container", {})
+globalStyle(".work-row .snork-container", {
+  position: "relative",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+})
 globalStyle(".work-row .work-stacks", {
   display: "flex",
   gap: "0.25rem",
@@ -218,24 +222,30 @@ globalStyle(".stock-row", {
   marginBottom: "1rem",
   columnGap: "1rem",
 })
+globalStyle(".stock-row .stock-container", {
+  position: "relative",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+})
 globalStyle(".stock-row .stuck-button", {
+  position: "absolute",
+  width: "max-content",
+  bottom: "-2.2em",
   textAlign: "center",
   fontWeight: "bold",
-  fontSize: "1.4rem",
+  fontSize: "1.2rem",
   borderRadius: "6px",
   border: "1px solid white",
   backgroundColor: vars.colors.foundations.background,
+  padding: 4,
 })
 globalStyle(".stock-row .stuck-button:hover", {
   cursor: "pointer",
-  scale: 1.1,
+  boxShadow: "0 0 4px white",
 })
 globalStyle(".stock-row .stuck-button.voted", {
   backgroundColor: "transparent",
-})
-globalStyle(".stock-row .stuck-button.voted:hover", {
-  cursor: "not-allowed",
-  scale: 1,
 })
 globalStyle(".stock-row .stock:hover", {
   cursor: "pointer",
@@ -270,7 +280,7 @@ globalStyle(".common-row .foundations", {
   padding: "4px",
   rowGap: "4px",
   paddingTop: "calc(8vw + 8px)",
-  paddingBottom: "8px",
+  paddingBottom: "4vw",
   overflowY: "scroll",
 })
 globalStyle(".common-row .foundations.player-count-3", {

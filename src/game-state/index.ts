@@ -5,7 +5,7 @@ import { GameState, MoveData } from "../logic/types"
 
 export const yourPlayerIdAtom = atom<PlayerId>("")
 export const gameStateAtom = atom<GameState>()
-export const staleCountAtom = atom<number>(0)
+export const staleCountAtom = atom<number>(-1) // -1 to account for first render
 
 const moveAtom = atom<MoveData | null>(null)
 // derived atom to make sure spectators can't select cards for moves
