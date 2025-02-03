@@ -139,6 +139,10 @@ globalStyle(".tableau", {
 
 globalStyle(".waiting-room", {
   position: "absolute",
+  top: 0,
+  bottom: 0,
+  left: 0,
+  right: 0,
   textAlign: "center",
   padding: "10%",
   borderRadius: "6px",
@@ -206,18 +210,19 @@ globalStyle(".work-row .badge", {
   filter: "saturate(1.3)",
 })
 globalStyle(".work-row .snork-button", {
-  width: "max-content",
-  textAlign: "center",
-  fontWeight: "bold",
-  fontSize: "1.2rem",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "16vw",
+  height: "22vw",
   borderRadius: "6px",
   border: "1px solid white",
   backgroundColor: vars.colors.foundations.background,
   padding: 4,
-  animation: "2s infinite shake",
 })
 globalStyle(".work-row .snork-button:hover", {
   cursor: "pointer",
+  animation: "2s infinite shake",
   boxShadow: "0 0 4px white",
 })
 globalStyle(".work-row .snork-container", {
@@ -226,6 +231,12 @@ globalStyle(".work-row .snork-container", {
   flexDirection: "column",
   alignItems: "center",
 })
+globalStyle(".work-row .snork-container .askew", {
+  transform: "rotate(-45deg)",
+  fontSize: "5vw",
+  fontWeight: "bold",
+})
+
 globalStyle(".work-row .work-stacks", {
   display: "flex",
   gap: "0.25rem",
@@ -243,11 +254,14 @@ globalStyle(".work-stack .card:first-child", {
 })
 
 globalStyle(".stock-row", {
+  position: "sticky",
+  bottom: 0,
   display: "flex",
-  alignItems: "flex-start",
+  alignItems: "flex-end",
+  alignSelf: "flex-start",
   justifyContent: "center",
-  marginTop: "1rem",
-  marginBottom: "1rem",
+  paddingTop: "0.5rem",
+  paddingBottom: "0.5rem",
   columnGap: "1rem",
 })
 globalStyle(".stock-row .stock-container", {
@@ -257,9 +271,9 @@ globalStyle(".stock-row .stock-container", {
   alignItems: "center",
 })
 globalStyle(".stock-row .stuck-button", {
-  position: "absolute",
+  // position: "absolute",
   width: "max-content",
-  bottom: "-2.2em",
+  // bottom: "-2.2em",
   textAlign: "center",
   fontWeight: "bold",
   fontSize: "1.2rem",
@@ -343,10 +357,10 @@ globalStyle(".common-row .badge.me", {
 // animations
 globalKeyframes("shake", {
   "0%": { transform: "rotate(0deg)" },
-  "85%": { transform: "rotate(0deg)" },
-  "85.1%": { transform: "rotate(10deg)" },
-  "90%": { transform: "rotate(-10deg)" },
-  "95%": { transform: "rotate(10deg)" },
+  "15%": { transform: "rotate(10deg)" },
+  "20%": { transform: "rotate(-10deg)" },
+  "25%": { transform: "rotate(10deg)" },
+  "30%": { transform: "rotate(0deg)" },
   "100%": { transform: "rotate(0deg)" },
 })
 

@@ -80,14 +80,6 @@ export function StockRow({ tableau, playerIndex }: StockRowProps) {
         ) : (
           <CardPlaceholder onClick={handleStockClick} />
         )}
-        {tableau.stockIsStale && (
-          <div
-            className={`stuck-button ${tableau.isStuck ? "voted" : ""}`}
-            onClick={() => Rune.actions.voteStuck()}
-          >
-            {tableau.isStuck ? "Unstuck" : `I'm Stuck`}
-          </div>
-        )}
       </div>
       <div className="waste">
         {tableau.wastePile.length > 0 &&
@@ -115,6 +107,14 @@ export function StockRow({ tableau, playerIndex }: StockRowProps) {
               )
             })}
       </div>
+      {tableau.stockIsStale && (
+        <div
+          className={`stuck-button ${tableau.isStuck ? "voted" : ""}`}
+          onClick={() => Rune.actions.voteStuck()}
+        >
+          <span>{tableau.isStuck ? "Unstuck" : `I'm Stuck`}</span>
+        </div>
+      )}
     </div>
   )
 }

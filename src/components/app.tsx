@@ -6,7 +6,6 @@ import { getFoundationsScoreMap, getPlayerIndex } from "../logic/utils"
 import { Foundations } from "./foundations"
 import { StockRow } from "./stock-row"
 import { WorkRow } from "./work-row"
-import { ScoreMap } from "../logic/types"
 import { ScoreTotals } from "./score-totals"
 
 export function App() {
@@ -15,8 +14,7 @@ export function App() {
   const [yourPlayerId, setYourPlayerId] = useAtom(yourPlayerIdAtom)
   const setStaleCount = useSetAtom(staleCountAtom)
   const [spectateIndex, setSpectateIndex] = useState(0)
-  const [totals, setTotals] = useState<ScoreMap>({})
-  const [showDiagram, setShowDiagram] = useState(true)
+  const [totals, setTotals] = useState<Record<string, number>>({})
 
   const spectateId = useMemo(() => {
     return game?.playerIds[spectateIndex]
@@ -53,7 +51,13 @@ export function App() {
 
   useEffect(() => {
     Rune.initClient({
-      onChange: ({ game, action, yourPlayerId }) => {
+      onChange: ({ event, game, action, yourPlayerId }) => {
+        if (event?.name === "stateSync" && event.isNewGame) {
+          console.log("event", event)
+          // game restart will run these actions
+          setStaleCount(-1)
+        }
+
         setGame(game)
         setYourPlayerId(yourPlayerId || "")
         // console.log(action)
@@ -99,6 +103,13 @@ export function App() {
           playerIds={game.playerIds}
           yourPlayerId={yourPlayerId}
           totals={totals}
+          stuckVotes={game.tableaus.reduce<Record<string, boolean>>(
+            (acc, t) => {
+              acc[t.playerId] = t.isStuck
+              return acc
+            },
+            {}
+          )}
         />
         <Foundations />
       </div>
@@ -122,27 +133,8 @@ export function App() {
       ) : (
         <div className={`waiting-room player${playerIndex}`}>
           <h1>Snork!</h1>
-          <div
-            className="instructions"
-            onClick={() => setShowDiagram(!showDiagram)}
-          >
-            {showDiagram ? (
-              <img src="snork-diagram.png" />
-            ) : (
-              <p>
-                A fast-paced solitaire-like card game where players try to be
-                the first to get rid of their Snork pile and declare "Snork!"
-                while playing as many cards as possible in the shared
-                foundations at the top. Score +1 for each of their cards in the
-                foundations, and be penalized -2 for any leftover snork pile
-                cards at the end of the game.
-              </p>
-            )}
-            {showDiagram ? (
-              <div className="chevron next">▶</div>
-            ) : (
-              <div className="chevron prev">◀</div>
-            )}
+          <div className="instructions">
+            <img src="snork-diagram.png" />
           </div>
           <h3>Waiting for all players to be ready...</h3>
           {yourPlayerId && (

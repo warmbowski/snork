@@ -80,15 +80,18 @@ export function WorkRow({ tableau, isGameOver, playerIndex }: WorkRowProps) {
         </div>
       ) : (
         <div className="snork-container">
-          <CardPlaceholder />
-          <div
-            className={!isGameOver ? "snork-button" : ""}
-            onClick={() => {
-              Rune.actions.declareSnork()
-            }}
-          >
-            Snork!
-          </div>
+          {!isGameOver ? (
+            <div
+              className="snork-button"
+              onClick={() => {
+                Rune.actions.declareSnork()
+              }}
+            >
+              <span className="askew">Snork!</span>
+            </div>
+          ) : (
+            <CardPlaceholder />
+          )}
         </div>
       )}
       <div className="work-stacks">

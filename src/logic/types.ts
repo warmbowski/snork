@@ -8,8 +8,6 @@ export type Suit = 0 | 1 | 2 | 3
 export type Color = 0 | 1
 export type Back = 0 | 1
 
-export type ScoreMap = Record<string, number>
-
 export interface Card {
   id: number
   rank: Rank

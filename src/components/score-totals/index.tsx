@@ -1,15 +1,15 @@
-import { ScoreMap } from "../../logic/types"
-
 interface ScoreTotalsProps {
   playerIds: string[]
   yourPlayerId: string
-  totals: ScoreMap
+  totals: Record<string, number>
+  stuckVotes: Record<string, boolean>
 }
 
 export function ScoreTotals({
   playerIds,
   yourPlayerId,
   totals,
+  stuckVotes,
 }: ScoreTotalsProps) {
   return (
     <div className="totals">
@@ -18,7 +18,8 @@ export function ScoreTotals({
           key={playerId}
           className={`badge player${idx} ${playerId === yourPlayerId ? "me" : ""}`}
         >
-          {totals[playerId] || 0}
+          <span className="stuck">{stuckVotes[playerId] && "😩"}</span>
+          <span>{totals[playerId] || 0}</span>
         </div>
       ))}
     </div>
