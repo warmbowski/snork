@@ -127,7 +127,7 @@ export function App() {
             onClick={() => setShowDiagram(!showDiagram)}
           >
             {showDiagram ? (
-              <img src="/snork-diagram.png" />
+              <img src="snork-diagram.png" />
             ) : (
               <p>
                 A fast-paced solitaire-like card game where players try to be
