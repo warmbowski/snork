@@ -8,6 +8,13 @@ globalStyle("html, body", {
   minHeight: "100vh",
   overflow: "hidden",
 })
+globalStyle("html, body", {
+  "@media": {
+    "screen and (min-width: 512px)": {
+      fontSize: 16,
+    },
+  },
+})
 
 globalStyle("*", {
   boxSizing: "border-box",
@@ -23,14 +30,6 @@ globalStyle("#root", {
 
 globalStyle(".relative", {
   position: "relative",
-})
-
-globalStyle("html, body", {
-  "@media": {
-    "screen and (min-width: 512px)": {
-      fontSize: 16,
-    },
-  },
 })
 
 globalStyle(".app", {
@@ -138,10 +137,34 @@ globalStyle(".tableau", {
   gap: "1rem",
 })
 
-globalStyle(".waiting", {
+globalStyle(".waiting-room", {
+  position: "absolute",
   textAlign: "center",
-  margin: "10%",
+  padding: "10%",
   borderRadius: "6px",
+})
+globalStyle(".waiting-room .instructions", {
+  position: "relative",
+  height: "75vw",
+})
+globalStyle(".waiting-room .instructions > img", {
+  display: "block",
+  maxWidth: "75vw",
+  margin: "auto",
+})
+globalStyle(".waiting-room .instructions > .chevron", {
+  position: "absolute",
+  fontSize: "2rem",
+  bottom: "50%",
+  transform: "translateY(50%)",
+})
+globalStyle(".waiting-room .instructions > .prev", {
+  content: "◀",
+  left: "-1em",
+})
+globalStyle(".waiting-room .instructions > .next", {
+  content: "▶",
+  right: "-1em",
 })
 
 globalStyle(".ready-button", {

@@ -16,6 +16,7 @@ export function App() {
   const setStaleCount = useSetAtom(staleCountAtom)
   const [spectateIndex, setSpectateIndex] = useState(0)
   const [totals, setTotals] = useState<ScoreMap>({})
+  const [showDiagram, setShowDiagram] = useState(true)
 
   const spectateId = useMemo(() => {
     return game?.playerIds[spectateIndex]
@@ -119,16 +120,30 @@ export function App() {
             })}
         </div>
       ) : (
-        <div className="waiting">
+        <div className={`waiting-room player${playerIndex}`}>
           <h1>Snork!</h1>
-          <p>
-            A fast-paced solitaire-like card game where players try to be the
-            first to get rid of their Snork pile and declare "Snork!", while
-            playing as many cards as possible in the shared foundations at the
-            top. They score +1 for each of their cards in the foundations, and
-            will be penalized -2 for any leftover snork pile cards at the end of
-            the game. Click the botton when you are ready to start.
-          </p>
+          <div
+            className="instructions"
+            onClick={() => setShowDiagram(!showDiagram)}
+          >
+            {showDiagram ? (
+              <img src="/snork-diagram.png" />
+            ) : (
+              <p>
+                A fast-paced solitaire-like card game where players try to be
+                the first to get rid of their Snork pile and declare "Snork!"
+                while playing as many cards as possible in the shared
+                foundations at the top. Score +1 for each of their cards in the
+                foundations, and be penalized -2 for any leftover snork pile
+                cards at the end of the game.
+              </p>
+            )}
+            {showDiagram ? (
+              <div className="chevron next">▶</div>
+            ) : (
+              <div className="chevron prev">◀</div>
+            )}
+          </div>
           <h3>Waiting for all players to be ready...</h3>
           {yourPlayerId && (
             <div
