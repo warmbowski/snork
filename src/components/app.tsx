@@ -53,7 +53,6 @@ export function App() {
     Rune.initClient({
       onChange: ({ event, game, action, yourPlayerId }) => {
         if (event?.name === "stateSync" && event.isNewGame) {
-          console.log("event", event)
           // game restart will run these actions
           setStaleCount(-1)
         }
