@@ -7,7 +7,7 @@ Snork! is a competitive multiplayer "solitaire-like" game for two or more player
 #### Bugz
 
 - [x] Freeze game (no more plays) when someone declares Snork! (end game button)
-- [ ] Stuck button not showing after 3x through stock pile with no plays
+- [x] Stuck button not showing after 3x through stock pile with no plays
 - [x] Inconsistent scoring animation
 
 #### Basic gameplay to implement:
@@ -25,9 +25,9 @@ Snork! is a competitive multiplayer "solitaire-like" game for two or more player
 - [x] Implement end game button for players who deplete their Snork pile (they may keep playing cards until this end game button is pressed)
 - [x] Implement score keeping logic
 - [x] Implement ready button and game start logic
-- [ ] Implement end game screen with scoring and pleasant animations
+- [ ] Implement end game screen with scoring breakdown for all players
 - [ ] Add sound effects and animations
-  - [ ] Add animations and sound effect for card placements in foundations
+  - [ ] Add sound effect for card placements in foundations
   - [ ] Add sound effect for general card placement
   - [ ] Add sound effect for waste flip
   - [ ] Add sound effect for stalemate button
@@ -36,8 +36,9 @@ Snork! is a competitive multiplayer "solitaire-like" game for two or more player
 
 #### Expanded gameplay ideas to implement:
 
-- [x] Support multiplayer > 2
-- [ ]
+- [x] Support multiplayer > 2 to 4 players
+- [ ] Support multiplayer up to 6 players
+- [ ] Let spectators take over for players who leave (not sure this is possible)
 - [ ] Persist game stats for each player: PRs, Totals, etc
 
 #### Expanded UX ideas:
