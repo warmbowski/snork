@@ -1,4 +1,4 @@
-import { useMemo } from "react"
+import { useCallback, useMemo } from "react"
 import clsx from "clsx"
 import { useAtom } from "jotai"
 import { CardPlaceholder } from "../placeholder"
@@ -18,6 +18,40 @@ export function WorkRow({ tableau, isGameOver, playerIndex }: WorkRowProps) {
   const upSnorkCard = useMemo(
     () => (tableau.snorkPile.length ? tableau.snorkPile[0] : null),
     [tableau.snorkPile]
+  )
+
+  const handleSnorkCardClick = useCallback(() => {
+    if (!upSnorkCard) return
+
+    if (moveData && moveData.src.cardId === upSnorkCard.id) {
+      setMoveData(null)
+    } else {
+      setMoveData({
+        playerIndex,
+        src: {
+          pile: "snorkPile",
+          cardId: upSnorkCard.id,
+        },
+      })
+    }
+  }, [moveData, setMoveData, playerIndex, upSnorkCard])
+
+  const handleWorkPileClick = useCallback(
+    (cardId: number, slot: number) => () => {
+      if (moveData && moveData.src.cardId === cardId) {
+        setMoveData(null)
+      } else {
+        setMoveData({
+          playerIndex,
+          src: {
+            pile: "workPile",
+            slot,
+            cardId: cardId,
+          },
+        })
+      }
+    },
+    [moveData, setMoveData, playerIndex]
   )
 
   return (
@@ -40,19 +74,7 @@ export function WorkRow({ tableau, isGameOver, playerIndex }: WorkRowProps) {
               selectable: true,
               selected: moveData && moveData.src.cardId === upSnorkCard.id,
             })}
-            onClick={() => {
-              if (moveData && moveData.src.cardId === upSnorkCard.id) {
-                setMoveData(null)
-              } else {
-                setMoveData({
-                  playerIndex,
-                  src: {
-                    pile: "snorkPile",
-                    cardId: upSnorkCard.id,
-                  },
-                })
-              }
-            }}
+            onClick={handleSnorkCardClick}
           />
           <div className="badge base-color">{tableau.snorkPile.length}</div>
         </div>
@@ -86,20 +108,7 @@ export function WorkRow({ tableau, isGameOver, playerIndex }: WorkRowProps) {
                         })}
                         style={{ zIndex: idx }}
                         card={card}
-                        onClick={() => {
-                          if (moveData && moveData.src.cardId === card.id) {
-                            setMoveData(null)
-                          } else {
-                            setMoveData({
-                              playerIndex,
-                              src: {
-                                pile: "workPile",
-                                slot,
-                                cardId: card.id,
-                              },
-                            })
-                          }
-                        }}
+                        onClick={handleWorkPileClick(card.id, slot)}
                       />
                     )
                   })

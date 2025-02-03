@@ -1,7 +1,7 @@
 import { useAtom } from "jotai"
 import { moveCardDataAtom } from "../../game-state"
 import clsx from "clsx"
-import { ReactNode, useEffect, useMemo, useState } from "react"
+import { ReactNode, useCallback, useEffect, useMemo, useState } from "react"
 import { SCORE_ANIMATION_DURATION_MS } from "../../constants"
 
 interface ScoreIt {
@@ -35,6 +35,13 @@ export function CardDestination({
     return moveData?.src
   }, [moveData?.src, pile, slot])
 
+  const handleDestinationClick = useCallback(() => {
+    if (active && moveData) {
+      Rune.actions.moveCard({ ...moveData, dest: { pile, slot } })
+      setMoveData(null)
+    }
+  }, [active, moveData, pile, setMoveData, slot])
+
   useEffect(() => {
     if (scoreIt && scoreIt.cardId !== lastScore?.cardId) {
       setLastScore(scoreIt)
@@ -52,12 +59,7 @@ export function CardDestination({
         dropzone: true,
         active: active,
       })}
-      onClick={() => {
-        if (active && moveData) {
-          Rune.actions.moveCard({ ...moveData, dest: { pile, slot } })
-          setMoveData(null)
-        }
-      }}
+      onClick={handleDestinationClick}
     >
       {children}
       {animateScore !== null && (

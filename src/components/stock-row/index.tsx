@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react"
+import { useCallback, useEffect, useMemo, useRef } from "react"
 import { Tableau } from "../../logic/types"
 import { CardPlaceholder } from "../placeholder"
 import { STALE_COUNT_TRESHOLD } from "../../constants"
@@ -38,6 +38,36 @@ export function StockRow({ tableau, playerIndex }: StockRowProps) {
     }
   }, [staleCount])
 
+  const handleStockClick = useCallback(() => {
+    // Throttle stock turning action as it can easily be spammed
+    // Rune limit is 10 actions per second
+    if (stockThrottled.current) return
+    stockThrottled.current = true
+    setTimeout(() => {
+      stockThrottled.current = false
+    }, 300)
+
+    setMoveData(null)
+    Rune.actions.turnStock()
+  }, [setMoveData])
+
+  const handleWasteCardClick = useCallback(
+    (cardId: number) => () => {
+      if (moveData && moveData.src.cardId === cardId) {
+        setMoveData(null)
+      } else {
+        setMoveData({
+          playerIndex,
+          src: {
+            pile: "stockPile",
+            cardId: cardId,
+          },
+        })
+      }
+    },
+    [moveData, playerIndex, setMoveData]
+  )
+
   return (
     <div className="stock-row">
       <div className="stock-container">
@@ -45,23 +75,10 @@ export function StockRow({ tableau, playerIndex }: StockRowProps) {
           <img
             className="card stock pile"
             src={`card-themes/default/cards/card-back${playerIndex}.png`}
-            onClick={() => {
-              // Throttle stock turning action as it can easily be spammed
-              // Rune limit is 10 actions per second
-              if (stockThrottled.current) return
-              stockThrottled.current = true
-              setTimeout(() => {
-                stockThrottled.current = false
-              }, 300)
-
-              if (moveData?.src.pile === "stockPile") {
-                setMoveData(null)
-              }
-              Rune.actions.turnStock()
-            }}
+            onClick={handleStockClick}
           />
         ) : (
-          <CardPlaceholder onClick={() => Rune.actions.turnStock()} />
+          <CardPlaceholder onClick={handleStockClick} />
         )}
         {tableau.stockIsStale && (
           <div
@@ -89,19 +106,11 @@ export function StockRow({ tableau, playerIndex }: StockRowProps) {
                     selected: moveData && moveData.src.cardId === card.id,
                   })}
                   card={card}
-                  onClick={() => {
-                    if (moveData && moveData.src.cardId === card.id) {
-                      setMoveData(null)
-                    } else {
-                      setMoveData({
-                        playerIndex,
-                        src: {
-                          pile: "stockPile",
-                          cardId: card.id,
-                        },
-                      })
-                    }
-                  }}
+                  onClick={
+                    idx === arr.length - 1
+                      ? handleWasteCardClick(card.id)
+                      : undefined
+                  }
                 />
               )
             })}
