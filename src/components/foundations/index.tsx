@@ -1,6 +1,6 @@
 import { useAtom } from "jotai"
 import { gameStateAtom } from "../../game-state"
-import { CardPlaceholder } from "../placeholder"
+import { FoundationPile } from "../placeholder"
 import clsx from "clsx"
 import { CardDestination } from "../card-destination"
 import { getPlayerIndex } from "../../logic/utils"
@@ -34,7 +34,7 @@ export function Foundations() {
                 src={`card-themes/default/cards/suit${topCard.suit}/rank${topCard.rank - 1}.png`}
               />
             ) : (
-              <CardPlaceholder />
+              <FoundationPile />
             )}
           </CardDestination>
         )

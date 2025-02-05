@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from "react"
 import clsx from "clsx"
 import { useAtom } from "jotai"
-import { CardPlaceholder } from "../placeholder"
+import { SnorkPile, WorkStack } from "../placeholder"
 import { CardDestination } from "../card-destination"
 import { Card } from "../card"
 import { Tableau } from "../../logic/types"
@@ -80,18 +80,13 @@ export function WorkRow({ tableau, isGameOver, playerIndex }: WorkRowProps) {
         </div>
       ) : (
         <div className="snork-container">
-          {!isGameOver ? (
-            <div
-              className="snork-button"
-              onClick={() => {
-                Rune.actions.declareSnork()
-              }}
-            >
-              <span className="askew">Snork!</span>
-            </div>
-          ) : (
-            <CardPlaceholder />
-          )}
+          <SnorkPile
+            className={isGameOver ? "" : "snork-button"}
+            onClick={() => {
+              if (isGameOver) return
+              Rune.actions.declareSnork()
+            }}
+          />
         </div>
       )}
       <div className="work-stacks">
@@ -116,7 +111,7 @@ export function WorkRow({ tableau, isGameOver, playerIndex }: WorkRowProps) {
                     )
                   })
                 ) : (
-                  <CardPlaceholder />
+                  <WorkStack />
                 )}
               </div>
             </CardDestination>

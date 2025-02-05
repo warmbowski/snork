@@ -85,6 +85,13 @@ globalStyle(".card.selectable.selected", {
   transform: "translateY(-2vw)",
 })
 
+globalStyle(".waste-placeholder", {
+  width: "32vw",
+})
+globalStyle(".placeholder", {
+  opacity: 0.5,
+})
+
 globalStyle(".dropzone", {
   position: "relative",
   height: "fit-content",
@@ -109,7 +116,7 @@ globalStyle(".dropzone > .animate-score", {
   borderRadius: "50%",
   filter: "saturate(1.3)",
   opacity: 0,
-  boxShadow: "0 0 4px 2px white",
+  boxShadow: "0 0 4px 2px " + vars.colors.highlight,
   animation: "score 0.5s linear",
   animationIterationCount: "1",
   animationFillMode: "initial",
@@ -193,7 +200,7 @@ globalStyle(".ready-button", {
 })
 globalStyle(".ready-button:hover", {
   cursor: "pointer",
-  boxShadow: "0 0 4px white",
+  boxShadow: "0 0 4px 2px " + vars.colors.highlight,
 })
 globalStyle(".ready-button.voted", {
   backgroundColor: "transparent",
@@ -212,17 +219,6 @@ globalStyle(".work-row .badge", {
   position: "absolute",
   bottom: "-1em",
 })
-globalStyle(".work-row .snork-button", {
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "16vw",
-  height: "22vw",
-  borderRadius: "6px",
-  border: "1px solid white",
-  backgroundColor: vars.colors.foundations.background,
-  padding: 4,
-})
 globalStyle(".work-row .snork-button:hover", {
   cursor: "pointer",
   animation: "2s infinite shake",
@@ -234,12 +230,6 @@ globalStyle(".work-row .snork-container", {
   flexDirection: "column",
   alignItems: "center",
 })
-globalStyle(".work-row .snork-container .askew", {
-  transform: "rotate(-45deg)",
-  fontSize: "5vw",
-  fontWeight: "bold",
-})
-
 globalStyle(".work-row .work-stacks", {
   display: "flex",
   gap: "0.25rem",
@@ -285,7 +275,7 @@ globalStyle(".stock-row .stuck-button", {
 })
 globalStyle(".stock-row .stuck-button:hover", {
   cursor: "pointer",
-  boxShadow: "0 0 4px white",
+  boxShadow: "0 0 4px 2px " + vars.colors.highlight,
 })
 globalStyle(".stock-row .stuck-button.voted", {
   backgroundColor: "transparent",
