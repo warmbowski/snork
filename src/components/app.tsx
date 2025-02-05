@@ -6,7 +6,10 @@ import { getFoundationsScoreMap, getPlayerIndex } from "../logic/utils"
 import { Foundations } from "./foundations"
 import { StockRow } from "./stock-row"
 import { WorkRow } from "./work-row"
-import { ScoreTotals } from "./score-totals"
+import { ScoreBanner } from "./score-banner"
+import { SpectatePanel } from "./spectate-panel"
+import { WaitingRoom } from "./waiting-room"
+import { GameEndPanel } from "./game-end-panel"
 
 export function App() {
   const rootRef = useRef<HTMLDivElement>(null)
@@ -23,6 +26,15 @@ export function App() {
   const playerIndex = useMemo(() => {
     return game ? getPlayerIndex(game, yourPlayerId || spectateId || "") : -1
   }, [game, spectateId, yourPlayerId])
+
+  const stuckPlayerMap = useMemo(() => {
+    return (
+      game?.tableaus.reduce<Record<string, boolean>>((acc, t) => {
+        acc[t.playerId] = t.isStuck
+        return acc
+      }, {}) || {}
+    )
+  }, [game?.tableaus])
 
   usePreloadAssets()
 
@@ -43,7 +55,7 @@ export function App() {
       }
 
       // check if game is over
-      if (game.snorkDeclared === yourPlayerId) {
+      if (game.snorkDeclaredBy === yourPlayerId) {
         Rune.actions.endGame()
       }
     }
@@ -97,21 +109,19 @@ export function App() {
 
   return (
     <div ref={rootRef} className={`app player${playerIndex}`}>
-      <div className={`common-row player-count-${game.playerIds.length}`}>
-        <ScoreTotals
-          playerIds={game.playerIds}
-          yourPlayerId={yourPlayerId}
-          totals={totals}
-          stuckVotes={game.tableaus.reduce<Record<string, boolean>>(
-            (acc, t) => {
-              acc[t.playerId] = t.isStuck
-              return acc
-            },
-            {}
-          )}
-        />
-        <Foundations />
-      </div>
+      {!game.gameOverResults?.[yourPlayerId] ? (
+        <div className={`common-row player-count-${game.playerIds.length}`}>
+          <ScoreBanner
+            playerIds={game.playerIds}
+            yourPlayerId={yourPlayerId}
+            totals={totals}
+            stuckVotes={stuckPlayerMap}
+          />
+          <Foundations />
+        </div>
+      ) : (
+        <GameEndPanel yourPlayerId={yourPlayerId} game={game} />
+      )}
       {game.gameStarted ? (
         <div className="tableaus">
           {game.tableaus
@@ -130,37 +140,18 @@ export function App() {
             })}
         </div>
       ) : (
-        <div className={`waiting-room player${playerIndex}`}>
-          <h1>Snork!</h1>
-          <div className="instructions">
-            <img src="snork-diagram.png" />
-          </div>
-          <h3>Waiting for all players to be ready...</h3>
-          {yourPlayerId && (
-            <div
-              className={`ready-button ${game.tableaus[playerIndex].readyToStart ? "voted" : ""}`}
-              onClick={() => {
-                Rune.actions.voteStartGame()
-              }}
-            >
-              {game.tableaus[playerIndex].readyToStart ? "Ready!" : "Ready?"}
-            </div>
-          )}
-        </div>
+        <WaitingRoom
+          readyToStart={game.tableaus[playerIndex].readyToStart}
+          isPlayer={Boolean(yourPlayerId)}
+          playerIndex={playerIndex}
+        />
       )}
       {!yourPlayerId && (
-        <div className="playerSelect">
-          {game.playerIds.map((playerId, idx) => (
-            <img
-              key={playerId}
-              className={idx === spectateIndex ? "selected" : ""}
-              src={Rune.getPlayerInfo(playerId).avatarUrl}
-              onClick={() => {
-                setSpectateIndex(idx)
-              }}
-            />
-          ))}
-        </div>
+        <SpectatePanel
+          playerIds={game.playerIds}
+          spectateIndex={spectateIndex}
+          setSpectateIndex={setSpectateIndex}
+        />
       )}
     </div>
   )

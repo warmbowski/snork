@@ -19,6 +19,7 @@ export const vars = createGlobalTheme(":root", {
       background: "#14764a",
       text: getContrastYIQ("#14764a"),
     },
+    highlight: "#eff166",
     player1: {
       background: "#761914",
       text: getContrastYIQ("#761914"),

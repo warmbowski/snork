@@ -44,7 +44,7 @@ Rune.initLogic({
         )
         return createTableau(deck)
       }),
-      snorkDeclared: null,
+      snorkDeclaredBy: null,
     }
   },
   actions: {
@@ -64,7 +64,7 @@ Rune.initLogic({
       game.tableaus[getPlayerIndex(game, playerId)].isStuck = false
     },
     declareSnork: (_, { game, playerId }) => {
-      game.snorkDeclared = playerId
+      game.snorkDeclaredBy = playerId
     },
     voteStuck: (_, { game, playerId }) => {
       const { isStuck } = game.tableaus[getPlayerIndex(game, playerId)]

@@ -38,7 +38,7 @@ export interface GameState {
   playerIds: PlayerId[] // 1 to 4 players
   tableaus: Tableau[] // 1 tableau per player
   foundations: Card[][] // 4 stacks of up to 13 cards per player
-  snorkDeclared: string | null // set to playerId of the player who first declares Snork!
+  snorkDeclaredBy: string | null // set to playerId of the player who first declares Snork!
   gameOverResults?: Record<PlayerId, GameResult>
 }
 

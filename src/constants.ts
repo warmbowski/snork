@@ -3,6 +3,7 @@ export const STALE_COUNT_TRESHOLD = 2
 
 interface Theme {
   images: {
+    diagram: string
     cardPlaceholder: string
     cardBacks: string[]
     cards: string[]
@@ -14,6 +15,7 @@ interface Theme {
 
 export const TABLEAU_THEME: Theme = {
   images: {
+    diagram: "snork-diagram.png",
     cardPlaceholder: "card-themes/default/cards/card-placeholder.png",
     cardBacks: [
       "card-themes/default/cards/card-back0.png",

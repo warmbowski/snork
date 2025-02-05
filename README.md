@@ -32,6 +32,7 @@ Snork! is a competitive multiplayer "solitaire-like" game for two or more player
   - [ ] Add sound effect for waste flip
   - [ ] Add sound effect for stalemate button
   - [ ] Add sound effect for snork! button
+  - [ ] Add animation for stock shuffle after stuck button is pressed
   - [ ] Add animations for end game screen
 
 #### Expanded gameplay ideas to implement:

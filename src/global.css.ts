@@ -4,14 +4,24 @@ import { vars } from "./theme.css"
 globalStyle("html, body", {
   padding: 0,
   margin: 0,
-  fontSize: 14,
+  fontSize: 10,
   minHeight: "100vh",
   overflow: "hidden",
-})
-globalStyle("html, body", {
   "@media": {
-    "screen and (min-width: 512px)": {
+    "screen and (min-width: 250px)": {
+      fontSize: 12,
+    },
+    "screen and (min-width: 350px)": {
+      fontSize: 14,
+    },
+    "screen and (min-width: 500px)": {
       fontSize: 16,
+    },
+    "screen and (min-width: 700px)": {
+      fontSize: 18,
+    },
+    "screen and (min-width: 1000px)": {
+      fontSize: 20,
     },
   },
 })
@@ -82,7 +92,7 @@ globalStyle(".dropzone", {
 })
 globalStyle(".dropzone.active", {
   outline: "none",
-  boxShadow: "0 0 4px 2px #eff166",
+  boxShadow: "0 0 4px 2px " + vars.colors.highlight,
   cursor: "pointer",
 })
 globalStyle(".dropzone > .animate-score", {
@@ -196,18 +206,11 @@ globalStyle(".work-row", {
   marginTop: "1rem",
   marginBottom: "1rem",
   columnGap: "1rem",
+  zIndex: 10,
 })
 globalStyle(".work-row .badge", {
   position: "absolute",
   bottom: "-1em",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  width: "2em",
-  height: "2em",
-  borderRadius: "50%",
-  border: "1px solid white",
-  filter: "saturate(1.3)",
 })
 globalStyle(".work-row .snork-button", {
   display: "flex",
@@ -271,9 +274,7 @@ globalStyle(".stock-row .stock-container", {
   alignItems: "center",
 })
 globalStyle(".stock-row .stuck-button", {
-  // position: "absolute",
   width: "max-content",
-  // bottom: "-2.2em",
   textAlign: "center",
   fontWeight: "bold",
   fontSize: "1.2rem",
@@ -340,14 +341,10 @@ globalStyle(".common-row .totals", {
   justifyContent: "space-evenly",
   margin: "4px auto",
 })
-globalStyle(".common-row .badge", {
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
+globalStyle(".common-row .badge.square", {
   minWidth: "3em",
   height: "8vw",
   borderRadius: "6px",
-  filter: "saturate(1.3)",
 })
 globalStyle(".common-row .badge.me", {
   border: "2px solid white",
@@ -375,4 +372,27 @@ globalKeyframes("pulse-border", {
   "5%": { borderWidth: 1 },
   "10%": { borderWidth: 2 },
   "100%": { borderWidth: 2 },
+})
+
+globalStyle(".badge", {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  width: "2em",
+  height: "2em",
+  borderRadius: "50%",
+  border: "1px solid white",
+  filter: "saturate(1.3)",
+})
+
+globalStyle(".badge.square", {
+  minWidth: "3em",
+  width: "auto",
+  height: "8vw",
+  borderRadius: "6px",
+})
+
+globalStyle(".badge.me", {
+  border: "2px solid white",
+  animation: "5s infinite pulse-border",
 })
