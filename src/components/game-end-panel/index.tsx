@@ -39,9 +39,7 @@ export function GameEndPanel({ yourPlayerId, game }: GameEndPanelProps) {
             <div className={styles.badges}>
               <div className="badge score">+{score}</div>
               <div className="badge penalty">{penalty}</div>
-              <div className="result">
-                {game.gameOverResults?.[playerId]}&nbsp;
-              </div>
+              <div>{game.gameOverResults?.[playerId]}&nbsp;</div>
             </div>
           </div>
         )

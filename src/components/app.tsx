@@ -109,7 +109,7 @@ export function App() {
 
   return (
     <div ref={rootRef} className={`app player${playerIndex}`}>
-      {!game.gameOverResults?.[yourPlayerId] ? (
+      {game.gameOverResults?.[yourPlayerId] ? (
         <div className={`common-row player-count-${game.playerIds.length}`}>
           <ScoreBanner
             playerIds={game.playerIds}

@@ -71,5 +71,6 @@ export const badges = style({
   flexDirection: "column",
   justifyContent: "space-evenly",
   height: "100%",
+  lineHeight: 1,
   gap: "0.2rem",
 })

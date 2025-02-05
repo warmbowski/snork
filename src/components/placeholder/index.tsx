@@ -8,7 +8,7 @@ export function CardPlaceholder({ className = "", onClick }: PlaceholderProps) {
     <img
       className={`card placeholder ${className}`}
       onClick={onClick}
-      src={`card-themes/default/cards/card-placeholder.png`}
+      src="card-themes/default/cards/card-placeholder.png"
     />
   )
 }
@@ -18,7 +18,7 @@ export function SnorkPile({ className = "", onClick }: PlaceholderProps) {
     <img
       className={`card placeholder ${className}`}
       onClick={onClick}
-      src={`card-themes/default/cards/card-placeholder-snork.png`}
+      src="card-themes/default/cards/card-placeholder-snork.png"
     />
   )
 }
@@ -27,7 +27,7 @@ export function FoundationPile({ className = "", onClick }: PlaceholderProps) {
     <img
       className={`card placeholder ${className}`}
       onClick={onClick}
-      src={`card-themes/default/cards/card-placeholder-foundation.png`}
+      src="card-themes/default/cards/card-placeholder-foundation.png"
     />
   )
 }
@@ -37,7 +37,7 @@ export function WorkStack({ className = "", onClick }: PlaceholderProps) {
     <img
       className={`card placeholder ${className}`}
       onClick={onClick}
-      src={`card-themes/default/cards/card-placeholder-work.png`}
+      src="card-themes/default/cards/card-placeholder-work.png"
     />
   )
 }
@@ -50,7 +50,7 @@ export function WastePlaceholder({
     <img
       className={`waste-placeholder placeholder ${className}`}
       onClick={onClick}
-      src={`card-themes/default/cards/card-placeholder.png`}
+      src="card-themes/default/cards/card-placeholder.png"
     />
   )
 }
