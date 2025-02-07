@@ -117,20 +117,26 @@ Rune.initLogic({
       switch (moveData.dest.pile) {
         case "foundation": {
           const destPile = game.foundations[moveData.dest?.slot || 0]
-          const cards = getMovingCards(game, playerId, moveData)
-          const card = cards[0]
-          const topCard = destPile[destPile.length - 1] || null
+          const movingCards = getMovingCards(game, playerId, moveData)
+          const movingCardTop = movingCards[0]
+          const destCardTop = destPile[destPile.length - 1] || null
 
-          if (topCard === null && card && card.rank === 1) {
-            addCardsToDestPile(game, playerId, moveData.dest, cards)
+          if (
+            destCardTop === null &&
+            movingCards.length === 1 &&
+            movingCardTop &&
+            movingCardTop.rank === 1
+          ) {
+            addCardsToDestPile(game, playerId, moveData.dest, movingCards)
             removeCardsFromSrcPile(game, playerId, moveData.src)
           } else if (
-            topCard &&
-            card &&
-            card.suit === topCard.suit &&
-            card.rank === topCard.rank + 1
+            destCardTop &&
+            movingCards.length === 1 &&
+            movingCardTop &&
+            movingCardTop.suit === destCardTop.suit &&
+            movingCardTop.rank === destCardTop.rank + 1
           ) {
-            addCardsToDestPile(game, playerId, moveData.dest, cards)
+            addCardsToDestPile(game, playerId, moveData.dest, movingCards)
             removeCardsFromSrcPile(game, playerId, moveData.src)
           }
 
@@ -146,21 +152,21 @@ Rune.initLogic({
             game.tableaus[getPlayerIndex(game, playerId)].workStacks[
               moveData.dest.slot
             ]
-          const cards = getMovingCards(game, playerId, moveData)
-          const card = cards[0]
-          const topCard = destPile[destPile.length - 1] || null
+          const movingCards = getMovingCards(game, playerId, moveData)
+          const movingCardTop = movingCards[0]
+          const destCardTop = destPile[destPile.length - 1] || null
 
-          if (topCard === null && card) {
-            addCardsToDestPile(game, playerId, moveData.dest, cards)
+          if (destCardTop === null && movingCardTop) {
+            addCardsToDestPile(game, playerId, moveData.dest, movingCards)
             removeCardsFromSrcPile(game, playerId, moveData.src)
           } else if (
-            topCard &&
-            topCard.rank > 1 &&
-            card &&
-            card.color !== topCard.color &&
-            card.rank === topCard.rank - 1
+            destCardTop &&
+            destCardTop.rank > 1 &&
+            movingCardTop &&
+            movingCardTop.color !== destCardTop.color &&
+            movingCardTop.rank === destCardTop.rank - 1
           ) {
-            addCardsToDestPile(game, playerId, moveData.dest, cards)
+            addCardsToDestPile(game, playerId, moveData.dest, movingCards)
             removeCardsFromSrcPile(game, playerId, moveData.src)
           }
           break
