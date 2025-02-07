@@ -60,7 +60,7 @@ export function StockRow({ tableau, playerIndex }: StockRowProps) {
           playerIndex,
           src: {
             pile: "stockPile",
-            cardId: cardId,
+            cardId,
           },
         })
       }

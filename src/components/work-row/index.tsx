@@ -46,7 +46,7 @@ export function WorkRow({ tableau, isGameOver, playerIndex }: WorkRowProps) {
           src: {
             pile: "workPile",
             slot,
-            cardId: cardId,
+            cardId,
           },
         })
       }
