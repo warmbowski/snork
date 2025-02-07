@@ -10,6 +10,11 @@ Snork! is a competitive multiplayer "solitaire-like" game for two or more player
 - [x] Stuck button not showing after 3x through stock pile with no plays
 - [x] Inconsistent scoring animation
 
+#### Asset References
+
+- Cards: https://neonorbis.itch.io/playing-cards
+- Sounds: https://alan-dalcastagne.itch.io/fast-ui-sounds-sound-effects
+
 #### Basic gameplay to implement:
 
 - [x] Scaffold in basic multiplayer game layout for Rune
@@ -27,13 +32,14 @@ Snork! is a competitive multiplayer "solitaire-like" game for two or more player
 - [x] Implement ready button and game start logic
 - [ ] Implement end game screen with scoring breakdown for all players
 - [ ] Add sound effects and animations
-  - [ ] Add sound effect for card placements in foundations
-  - [ ] Add sound effect for general card placement
-  - [ ] Add sound effect for waste flip
-  - [ ] Add sound effect for stalemate button
-  - [ ] Add sound effect for snork! button
-  - [ ] Add animation for stock shuffle after stuck button is pressed
+  - [x] Add sound effect for card placements in foundations
+  - [x] Add sound effect for general card placement
+  - [x] Add sound effect for waste flip
+  - [x] Add sound effect for stalemate button
+  - [x] Add sound effect for snork! button
+  - [x] Add animation for stock shuffle after stuck button is pressed
   - [ ] Add animations for end game screen
+- [ ] Credit asset makers on end game screen
 
 #### Expanded gameplay ideas to implement:
 
