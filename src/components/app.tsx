@@ -10,6 +10,15 @@ import { ScoreBanner } from "./score-banner"
 import { SpectatePanel } from "./spectate-panel"
 import { WaitingRoom } from "./waiting-room"
 import { GameEndPanel } from "./game-end-panel"
+import { TABLEAU_THEME } from "../constants"
+
+const declareSnork = new Audio(TABLEAU_THEME.audio.declareSnork)
+const resetStock = new Audio(TABLEAU_THEME.audio.resetStock)
+const turnStock = new Audio(TABLEAU_THEME.audio.turnStock)
+const voteStuck = new Audio(TABLEAU_THEME.audio.voteStuck)
+const moveToFoundation = new Audio(TABLEAU_THEME.audio.moveToFoundation)
+const moveToWork = new Audio(TABLEAU_THEME.audio.moveToWork)
+// const moveInvalid = new Audio(TABLEAU_THEME.audio.moveInvalid)
 
 export function App() {
   const rootRef = useRef<HTMLDivElement>(null)
@@ -77,26 +86,38 @@ export function App() {
 
         // add action sounds effects here
         if (action && action.name === "moveCard") {
-          // playSound("moveCard")
           if (action.params.src.pile === "stockPile") {
             setStaleCount(0)
           }
+          if (action.params.dest.pile === "foundation") {
+            moveToFoundation.play()
+          }
+          if (
+            action.params.dest.pile === "workPile" &&
+            action.playerId === yourPlayerId
+          ) {
+            moveToWork.play()
+          }
         }
-        if (action && action.name === "turnStock") {
-          // playSound("turnStock")
+        if (
+          action &&
+          action.name === "turnStock" &&
+          action.playerId === yourPlayerId
+        ) {
+          turnStock.play()
         }
         if (action && action.name === "voteStuck") {
-          // playSound("voteStuck")
+          voteStuck.play()
         }
         if (action && action.name === "resetStockPiles") {
-          // playSound("resetStockPiles")
+          resetStock.play()
           setStaleCount(0)
         }
         if (action && action.name === "endGame") {
-          // playSound("endGame")
+          // endGame.play()
         }
         if (action && action.name === "declareSnork") {
-          // playSound("declareSnork")
+          declareSnork.play()
         }
       },
     })
