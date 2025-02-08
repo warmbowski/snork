@@ -16,7 +16,7 @@ export function GameEndPanel({ yourPlayerId, game }: GameEndPanelProps) {
         const playerId = tableau.playerId
         const playerIndex = getPlayerIndex(game, playerId)
         const score = scoreMap[playerId] || 0
-        const penalty = tableau.snorkPile.length * -2
+        const penalty = tableau.snorkPile.length * -1
 
         return (
           <div

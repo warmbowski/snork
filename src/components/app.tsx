@@ -18,6 +18,7 @@ const turnStock = new Audio(TABLEAU_THEME.audio.turnStock)
 const voteStuck = new Audio(TABLEAU_THEME.audio.voteStuck)
 const moveToFoundation = new Audio(TABLEAU_THEME.audio.moveToFoundation)
 const moveToWork = new Audio(TABLEAU_THEME.audio.moveToWork)
+const scoreSound = new Audio(TABLEAU_THEME.audio.score)
 // const moveInvalid = new Audio(TABLEAU_THEME.audio.moveInvalid)
 
 export function App() {
@@ -50,22 +51,24 @@ export function App() {
   useEffect(() => {
     // game state related rune actions called only from current player's game
     if (game) {
-      // check if all players are ready to start and start the game
-      if (game.tableaus.every((t) => t.readyToStart)) {
-        Rune.actions.startGame()
-      }
-
-      // check if everyeone is stuck and reset stock piles
-      if (game.tableaus.every((t) => t.isStuck)) {
-        // this is to endure the reset is only triggered from one player
-        if (game.tableaus[0].playerId === yourPlayerId) {
-          Rune.actions.resetStockPiles()
+      if (!game.gameStarted) {
+        // check if all players are ready to start and start the game
+        if (game.tableaus.every((t) => t.readyToStart)) {
+          Rune.actions.startGame()
         }
-      }
+      } else {
+        // check if everyeone is stuck and reset stock piles
+        if (game.tableaus.every((t) => t.isStuck)) {
+          // this is to endure the reset is only triggered from one player
+          if (game.tableaus[0].playerId === yourPlayerId) {
+            Rune.actions.resetStockPiles()
+          }
+        }
 
-      // check if game is over
-      if (game.snorkDeclaredBy === yourPlayerId) {
-        Rune.actions.endGame()
+        // check if game is over
+        if (game.snorkDeclaredBy === yourPlayerId) {
+          Rune.actions.endGame()
+        }
       }
     }
   }, [game, yourPlayerId])
@@ -80,7 +83,7 @@ export function App() {
 
         setGame(game)
         setYourPlayerId(yourPlayerId || "")
-        // console.log(action)
+        // console.log(action) // uncomment to debug actions in console
         const scoreMap = getFoundationsScoreMap(game)
         setTotals(scoreMap)
 
@@ -91,6 +94,7 @@ export function App() {
           }
           if (action.params.dest.pile === "foundation") {
             moveToFoundation.play()
+            scoreSound.play()
           }
           if (
             action.params.dest.pile === "workPile" &&

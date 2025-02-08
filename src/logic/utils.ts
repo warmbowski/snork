@@ -97,12 +97,12 @@ export function getFoundationsScoreMap(state: GameState) {
 export function computeGameOverResults(state: GameState) {
   const playerFoundationsScores = getFoundationsScoreMap(state)
   const sortedPlayerScores = Object.entries(playerFoundationsScores)
-    .map(([id, fScore]) => {
+    .map(([id, score]) => {
+      const penalty =
+        state.tableaus[getPlayerIndex(state, id)].snorkPile.length * -1
       return {
         playerId: id,
-        totalScore:
-          fScore -
-          state.tableaus[getPlayerIndex(state, id)].snorkPile.length * 2,
+        totalScore: score + penalty,
       }
     })
     .sort((a, b) => b.totalScore - a.totalScore)

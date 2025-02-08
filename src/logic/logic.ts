@@ -52,14 +52,25 @@ Rune.initLogic({
       game.tableaus[getPlayerIndex(game, playerId)].readyToStart = true
     },
     startGame: (_, { game }) => {
+      if (game.gameStarted) {
+        throw Rune.invalidAction()
+      }
       if (game.tableaus.every((t) => t.readyToStart)) {
         game.gameStarted = true
       }
     },
     markStockStale: (_, { game, playerId }) => {
+      if (game.tableaus[getPlayerIndex(game, playerId)].stockIsStale === true) {
+        throw Rune.invalidAction()
+      }
       game.tableaus[getPlayerIndex(game, playerId)].stockIsStale = true
     },
     markStockNotStale: (_, { game, playerId }) => {
+      if (
+        game.tableaus[getPlayerIndex(game, playerId)].stockIsStale === false
+      ) {
+        throw Rune.invalidAction()
+      }
       game.tableaus[getPlayerIndex(game, playerId)].stockIsStale = false
       game.tableaus[getPlayerIndex(game, playerId)].isStuck = false
     },
@@ -113,6 +124,7 @@ Rune.initLogic({
     },
     moveCard: (moveData, { game, playerId }) => {
       if (game.gameOverResults) return
+      let moveIsValid = false
 
       switch (moveData.dest.pile) {
         case "foundation": {
@@ -127,6 +139,7 @@ Rune.initLogic({
             movingCardTop &&
             movingCardTop.rank === 1
           ) {
+            moveIsValid = true
             addCardsToDestPile(game, playerId, moveData.dest, movingCards)
             removeCardsFromSrcPile(game, playerId, moveData.src)
           } else if (
@@ -136,6 +149,7 @@ Rune.initLogic({
             movingCardTop.suit === destCardTop.suit &&
             movingCardTop.rank === destCardTop.rank + 1
           ) {
+            moveIsValid = true
             addCardsToDestPile(game, playerId, moveData.dest, movingCards)
             removeCardsFromSrcPile(game, playerId, moveData.src)
           }
@@ -157,6 +171,7 @@ Rune.initLogic({
           const destCardTop = destPile[destPile.length - 1] || null
 
           if (destCardTop === null && movingCardTop) {
+            moveIsValid = true
             addCardsToDestPile(game, playerId, moveData.dest, movingCards)
             removeCardsFromSrcPile(game, playerId, moveData.src)
           } else if (
@@ -166,12 +181,14 @@ Rune.initLogic({
             movingCardTop.color !== destCardTop.color &&
             movingCardTop.rank === destCardTop.rank - 1
           ) {
+            moveIsValid = true
             addCardsToDestPile(game, playerId, moveData.dest, movingCards)
             removeCardsFromSrcPile(game, playerId, moveData.src)
           }
           break
         }
       }
+      if (!moveIsValid) throw Rune.invalidAction()
     },
   },
 })

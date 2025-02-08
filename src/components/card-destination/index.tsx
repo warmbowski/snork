@@ -2,9 +2,7 @@ import { useAtom } from "jotai"
 import { moveCardDataAtom } from "../../game-state"
 import clsx from "clsx"
 import { ReactNode, useCallback, useEffect, useMemo, useState } from "react"
-import { SCORE_ANIMATION_DURATION_MS, TABLEAU_THEME } from "../../constants"
-
-const scoreSound = new Audio(TABLEAU_THEME.audio.score)
+import { SCORE_ANIMATION_DURATION_MS } from "../../constants"
 
 interface ScoreIt {
   cardId: number
@@ -48,7 +46,6 @@ export function CardDestination({
     if (scoreIt && scoreIt.cardId !== lastScore?.cardId) {
       setLastScore(scoreIt)
       setAnimateScore(scoreIt.playerIndex)
-      scoreSound.play()
 
       setTimeout(() => {
         setAnimateScore(null)
