@@ -10,17 +10,6 @@ import { ScoreBanner } from "./score-banner"
 import { SpectatePanel } from "./spectate-panel"
 import { WaitingRoom } from "./waiting-room"
 import { GameEndPanel } from "./game-end-panel"
-import { TABLEAU_THEME } from "../constants"
-
-const declareSnork = new Audio(TABLEAU_THEME.audio.declareSnork)
-const resetStock = new Audio(TABLEAU_THEME.audio.resetStock)
-const turnStock = new Audio(TABLEAU_THEME.audio.turnStock)
-const voteReady = new Audio(TABLEAU_THEME.audio.voteReady)
-const voteStuck = new Audio(TABLEAU_THEME.audio.voteStuck)
-const moveToFoundation = new Audio(TABLEAU_THEME.audio.moveToFoundation)
-const moveToWork = new Audio(TABLEAU_THEME.audio.moveToWork)
-const scoreSound = new Audio(TABLEAU_THEME.audio.score)
-// const moveInvalid = new Audio(TABLEAU_THEME.audio.moveInvalid)
 
 export function App() {
   const rootRef = useRef<HTMLDivElement>(null)
@@ -47,7 +36,7 @@ export function App() {
     )
   }, [game?.tableaus])
 
-  usePreloadAssets()
+  const { audio } = usePreloadAssets()
 
   useEffect(() => {
     // game state related rune actions called only from current player's game
@@ -94,14 +83,14 @@ export function App() {
             setStaleCount(0)
           }
           if (action.params.dest.pile === "foundation") {
-            moveToFoundation.play()
-            scoreSound.play()
+            audio.playCard.play()
+            audio.score.play()
           }
           if (
             action.params.dest.pile === "workPile" &&
             action.playerId === yourPlayerId
           ) {
-            moveToWork.play()
+            audio.playCard.play()
           }
         }
         if (
@@ -109,27 +98,27 @@ export function App() {
           action.name === "turnStock" &&
           action.playerId === yourPlayerId
         ) {
-          turnStock.play()
+          audio.turnStock.play()
         }
         if (action && action.name === "voteStartGame") {
-          voteReady.play()
+          audio.voteReady.play()
         }
         if (action && action.name === "voteStuck") {
-          voteStuck.play()
+          audio.voteStuck.play()
         }
         if (action && action.name === "resetStockPiles") {
-          resetStock.play()
+          audio.resetStock.play()
           setStaleCount(0)
         }
         if (action && action.name === "endGame") {
           // endGame.play()
         }
         if (action && action.name === "declareSnork") {
-          declareSnork.play()
+          audio.declareSnork.play()
         }
       },
     })
-  }, [setGame, setStaleCount, setYourPlayerId])
+  }, [setGame, setStaleCount, setYourPlayerId, audio])
 
   if (!game) {
     // Rune only shows your game after an onChange() so no need for loading screen

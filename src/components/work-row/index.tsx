@@ -6,6 +6,7 @@ import { CardDestination } from "../card-destination"
 import { Card } from "../card"
 import { Tableau } from "../../logic/types"
 import { moveCardDataAtom } from "../../game-state"
+import { usePreloadAssets } from "../preload-theme"
 
 interface WorkRowProps {
   tableau: Tableau
@@ -15,6 +16,8 @@ interface WorkRowProps {
 
 export function WorkRow({ tableau, isGameOver, playerIndex }: WorkRowProps) {
   const [moveData, setMoveData] = useAtom(moveCardDataAtom)
+  const { audio } = usePreloadAssets()
+
   const upSnorkCard = useMemo(
     () => (tableau.snorkPile.length ? tableau.snorkPile[0] : null),
     [tableau.snorkPile]
@@ -26,6 +29,7 @@ export function WorkRow({ tableau, isGameOver, playerIndex }: WorkRowProps) {
     if (moveData && moveData.src.cardId === upSnorkCard.id) {
       setMoveData(null)
     } else {
+      audio.selectCard.play()
       setMoveData({
         playerIndex,
         src: {
@@ -41,6 +45,7 @@ export function WorkRow({ tableau, isGameOver, playerIndex }: WorkRowProps) {
       if (moveData && moveData.src.cardId === cardId) {
         setMoveData(null)
       } else {
+        audio.selectCard.play()
         setMoveData({
           playerIndex,
           src: {

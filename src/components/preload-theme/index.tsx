@@ -1,8 +1,33 @@
-import { useLayoutEffect, useState } from "react"
+import { useLayoutEffect, useRef, useState } from "react"
 import { TABLEAU_THEME } from "../../constants"
+
+interface ThemePreload {
+  images: {
+    diagram: HTMLImageElement
+    cardPlaceholders: HTMLImageElement[]
+    cardBacks: HTMLImageElement[]
+    cards: HTMLImageElement[]
+  }
+  audio: {
+    declareSnork: HTMLAudioElement
+    selectCard: HTMLAudioElement
+    playCard: HTMLAudioElement
+    resetStock: HTMLAudioElement
+    turnStock: HTMLAudioElement
+    voteReady: HTMLAudioElement
+    voteStuck: HTMLAudioElement
+    score: HTMLAudioElement
+  }
+}
 
 export const usePreloadAssets = () => {
   const [status, setStatus] = useState<"preload-started">()
+  const audioRef = useRef<
+    Record<string, HTMLAudioElement[] | HTMLAudioElement>
+  >({})
+  const imgRef = useRef<Record<string, HTMLImageElement[] | HTMLImageElement>>(
+    {}
+  )
 
   useLayoutEffect(() => {
     const loadImgs = (uri: string) => {
@@ -15,37 +40,47 @@ export const usePreloadAssets = () => {
         img.style.top = "150vh"
         img.style.left = "0"
         document.body.appendChild(img)
+        return img
       }
     }
 
-    Object.values(TABLEAU_THEME.images).forEach((value) => {
+    Object.entries(TABLEAU_THEME.images).forEach(([key, value]) => {
       if (Array.isArray(value)) {
-        value.forEach((src) => {
-          loadImgs(src)
+        const arr = value.map((src) => {
+          return loadImgs(src)!
         })
+        imgRef.current[key] = arr
       } else {
-        loadImgs(value)
+        imgRef.current[key] = loadImgs(value)!
       }
     })
 
     const loadAudio = (uri: string) => {
       if (typeof uri === "string" && uri.endsWith(".wav")) {
-        new Audio(uri)
+        const audio = new Audio(uri)
+        // audio.preload = "auto"
+        audio.load()
+        return audio
       }
     }
 
-    Object.values(TABLEAU_THEME.audio).forEach(([value]) => {
+    Object.entries(TABLEAU_THEME.audio).forEach(([key, value]) => {
       if (Array.isArray(value)) {
-        value.forEach((src) => {
-          loadAudio(src)
+        const arr = value.map((src) => {
+          return loadAudio(src)!
         })
+        audioRef.current[key] = arr
       } else {
-        loadAudio(value)
+        audioRef.current[key] = loadAudio(value)!
       }
     })
 
     setStatus("preload-started")
   }, [])
 
-  return status
+  return {
+    status,
+    audio: audioRef.current as unknown as ThemePreload["audio"],
+    images: imgRef.current as unknown as ThemePreload["images"],
+  }
 }

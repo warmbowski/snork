@@ -6,6 +6,7 @@ import { useAtom } from "jotai"
 import { moveCardDataAtom, staleCountAtom } from "../../game-state"
 import { Card } from "../card"
 import clsx from "clsx"
+import { usePreloadAssets } from "../preload-theme"
 
 interface StockRowProps {
   tableau: Tableau
@@ -16,6 +17,7 @@ export function StockRow({ tableau, playerIndex }: StockRowProps) {
   const stockThrottled = useRef(false)
   const [moveData, setMoveData] = useAtom(moveCardDataAtom)
   const [staleCount, setStaleCount] = useAtom(staleCountAtom)
+  const { audio } = usePreloadAssets()
 
   const topCards = useMemo(() => {
     return {
@@ -56,6 +58,7 @@ export function StockRow({ tableau, playerIndex }: StockRowProps) {
       if (moveData && moveData.src.cardId === cardId) {
         setMoveData(null)
       } else {
+        audio.selectCard.play()
         setMoveData({
           playerIndex,
           src: {
@@ -65,7 +68,7 @@ export function StockRow({ tableau, playerIndex }: StockRowProps) {
         })
       }
     },
-    [moveData, playerIndex, setMoveData]
+    [moveData, playerIndex, setMoveData, audio.selectCard]
   )
 
   return (
@@ -112,7 +115,7 @@ export function StockRow({ tableau, playerIndex }: StockRowProps) {
           className={`stuck-button ${tableau.isStuck ? "voted" : ""}`}
           onClick={() => Rune.actions.voteStuck()}
         >
-          <span>{tableau.isStuck ? "Unstuck" : `I'm Stuck`}</span>
+          <span>{tableau.isStuck ? "Unstuck" : `Stuck?`}</span>
         </div>
       )}
     </div>

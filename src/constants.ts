@@ -10,8 +10,8 @@ interface Theme {
   }
   audio: {
     declareSnork: string
-    moveToFoundation: string
-    moveToWork: string
+    selectCard: string
+    playCard: string
     resetStock: string
     turnStock: string
     voteReady: string
@@ -23,8 +23,8 @@ interface Theme {
 export const TABLEAU_THEME: Theme = {
   audio: {
     declareSnork: "audio-themes/default/declareSnork.wav",
-    moveToFoundation: "audio-themes/default/moveToFoundation.wav",
-    moveToWork: "audio-themes/default/moveToWork.wav",
+    selectCard: "audio-themes/default/selectCard.wav",
+    playCard: "audio-themes/default/playCard.wav",
     resetStock: "audio-themes/default/resetStock.wav",
     turnStock: "audio-themes/default/turnStock.wav",
     voteReady: "audio-themes/default/voteReady.wav",
