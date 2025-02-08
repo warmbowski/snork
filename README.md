@@ -30,7 +30,8 @@ Snork! is a competitive multiplayer "solitaire-like" game for two or more player
 - [x] Implement end game button for players who deplete their Snork pile (they may keep playing cards until this end game button is pressed)
 - [x] Implement score keeping logic
 - [x] Implement ready button and game start logic
-- [ ] Implement end game screen with scoring breakdown for all players
+- [x] Implement end game screen with scoring breakdown for all players
+- [ ] Credit asset makers on end game screen
 - [ ] Add sound effects and animations
   - [x] Add sound effect for card placements in foundations
   - [x] Add sound effect for general card placement
@@ -38,8 +39,7 @@ Snork! is a competitive multiplayer "solitaire-like" game for two or more player
   - [x] Add sound effect for stalemate button
   - [x] Add sound effect for snork! button
   - [x] Add animation for stock shuffle after stuck button is pressed
-  - [ ] Add animations for end game screen
-- [ ] Credit asset makers on end game screen
+  - [ ] Add animations for end game
 
 #### Expanded gameplay ideas to implement:
 
