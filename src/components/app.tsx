@@ -15,6 +15,7 @@ import { TABLEAU_THEME } from "../constants"
 const declareSnork = new Audio(TABLEAU_THEME.audio.declareSnork)
 const resetStock = new Audio(TABLEAU_THEME.audio.resetStock)
 const turnStock = new Audio(TABLEAU_THEME.audio.turnStock)
+const voteReady = new Audio(TABLEAU_THEME.audio.voteReady)
 const voteStuck = new Audio(TABLEAU_THEME.audio.voteStuck)
 const moveToFoundation = new Audio(TABLEAU_THEME.audio.moveToFoundation)
 const moveToWork = new Audio(TABLEAU_THEME.audio.moveToWork)
@@ -109,6 +110,9 @@ export function App() {
           action.playerId === yourPlayerId
         ) {
           turnStock.play()
+        }
+        if (action && action.name === "voteStartGame") {
+          voteReady.play()
         }
         if (action && action.name === "voteStuck") {
           voteStuck.play()
