@@ -38,7 +38,7 @@ export function WorkRow({ tableau, isGameOver, playerIndex }: WorkRowProps) {
         },
       })
     }
-  }, [moveData, setMoveData, playerIndex, upSnorkCard])
+  }, [moveData, setMoveData, playerIndex, upSnorkCard, audio.selectCard])
 
   const handleWorkPileClick = useCallback(
     (cardId: number, slot: number) => () => {
@@ -56,7 +56,7 @@ export function WorkRow({ tableau, isGameOver, playerIndex }: WorkRowProps) {
         })
       }
     },
-    [moveData, setMoveData, playerIndex]
+    [moveData, setMoveData, playerIndex, audio.selectCard]
   )
 
   return (
