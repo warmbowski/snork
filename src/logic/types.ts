@@ -1,4 +1,4 @@
-import { PlayerId } from "rune-sdk"
+import { PlayerId, RuneClient } from "rune-sdk"
 
 export type GameResult = "WON" | "LOST" | "TIE"
 export type Src = "snorkPile" | "stockPile" | "workPile"
@@ -63,4 +63,21 @@ export interface MoveData {
   playerIndex: number
   src: SnorkPileSrc | StockPileSrc | WorkPileSrc
   dest?: DestPile
+}
+
+export type GameActions = {
+  voteStartGame: () => void
+  startGame: () => void
+  turnStock: () => void
+  moveCard: (params: Required<MoveData>) => void
+  markStockStale: () => void
+  markStockNotStale: () => void
+  declareSnork: () => void
+  voteStuck: () => void
+  resetStockPiles: () => void
+  endGame: () => void
+}
+
+declare global {
+  const Rune: RuneClient<GameState, GameActions>
 }
